@@ -1,0 +1,7 @@
+asgiref==3.4.1
+certifi==2021.10.8
+Django==3.2.9
+pytz==2021.3
+-e git+ssh://git@github.com/getsentry/sentry-python.git@ec482d28bf4121cf33cd5a9ff466e90a6e0264fd#egg=sentry_sdk
+sqlparse==0.4.2
+urllib3==1.26.7
