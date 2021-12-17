@@ -1,0 +1,29 @@
+<% if @success %>
+  <p> Payment Successful! </p>
+<% else %>
+  <%= form_with url: '/checkout', id: 'checkout-form', local: false do |form| %>
+    <%= form.submit "OK" %>
+  <% end %>
+<% end %>
+
+<script>
+  var form = document.getElementById('checkout-form');
+    form.addEventListener("submit", function(e) {
+        console.log(e);
+        e.preventDefault();
+
+        var data = {
+            payment: {'currency': 'USD', 'address': 'Times Square'},
+            items: [
+                {'name': 'Wrench', 'price': 50, quantity: 10},
+                {'name': 'Hammer', 'price': 100, quantity: 2},
+                {'name': 'Screwdriver', 'price': 20, quantity: 5}
+              ]
+        };
+
+        fetch('/checkout', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+          });
+      });
+</script>
