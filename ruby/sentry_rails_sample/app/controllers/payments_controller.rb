@@ -7,6 +7,8 @@ class PaymentsController < ActionController::Base
 
     params = JSON.parse(request.body.read).with_indifferent_access
 
+    discount_factor = params[:discount].to_i
+
     payment = Payment.new(user: @user,
                            currency: params[:payment][:currency],
                            address: params[:payment][:address])
@@ -18,7 +20,9 @@ class PaymentsController < ActionController::Base
     payment.amount = payment.items.map { |i| i.quantity * i.price }.sum
     payment.save
 
-    1 / 0
+    discounted_amount = payment.amount / discount_factor
+    payment.update(amount: discounted_amount)
+
     @success = payment.charge
   end
 
