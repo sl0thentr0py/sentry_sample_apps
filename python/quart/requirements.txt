@@ -1,0 +1,22 @@
+aiofiles==0.8.0
+blinker==1.4
+certifi==2021.10.8
+click==8.0.3
+h11==0.12.0
+h2==4.1.0
+hpack==4.0.0
+hypercorn==0.13.1
+hyperframe==6.0.1
+importlib-metadata==4.10.0
+itsdangerous==2.0.1
+Jinja2==3.0.3
+MarkupSafe==2.0.1
+priority==2.0.0
+quart==0.16.2
+-e git+git@github.com:getsentry/sentry-python.git@c562c3c17d4c4c3a3f941796b09c63a71f22924d#egg=sentry_sdk
+toml==0.10.2
+typing-extensions==4.0.1
+urllib3==1.26.7
+Werkzeug==2.0.2
+wsproto==1.0.0
+zipp==3.6.0
