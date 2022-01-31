@@ -2,6 +2,10 @@ class PaymentsController < ActionController::Base
   before_action :set_sentry_user
   skip_forgery_protection
 
+  def error
+    1 / 0
+  end
+
   def checkout
     return unless request.post?
 
