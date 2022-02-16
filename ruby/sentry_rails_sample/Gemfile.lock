@@ -1,17 +1,17 @@
 PATH
-  remote: ../../../../sdks/sentry-ruby/sentry-rails
+  remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (5.0.2)
+    sentry-rails (5.1.0)
       railties (>= 5.0)
-      sentry-ruby-core (~> 5.0.2)
+      sentry-ruby-core (~> 5.1.0)
 
 PATH
-  remote: ../../../../sdks/sentry-ruby/sentry-ruby
+  remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.0.2)
+    sentry-ruby (5.1.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      sentry-ruby-core (= 5.0.2)
-    sentry-ruby-core (5.0.2)
+      sentry-ruby-core (= 5.1.0)
+    sentry-ruby-core (5.1.0)
       concurrent-ruby
 
 GEM
@@ -123,7 +123,6 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -195,6 +194,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    sqlite3 (1.4.2)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -233,7 +233,6 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  pg
   pry
   pry-byebug
   puma (~> 5.0)
@@ -244,6 +243,7 @@ DEPENDENCIES
   sentry-rails!
   sentry-ruby!
   spring
+  sqlite3
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

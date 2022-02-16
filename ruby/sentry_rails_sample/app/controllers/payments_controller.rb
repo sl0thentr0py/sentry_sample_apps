@@ -6,6 +6,10 @@ class PaymentsController < ActionController::Base
     1 / 0
   end
 
+  def success
+    render(plain: "success")
+  end
+
   def checkout
     return unless request.post?
 
@@ -34,6 +38,7 @@ class PaymentsController < ActionController::Base
 
   def set_sentry_user
     @user = User.find_by_email('jane.doe@example.com')
+    return unless @user
     Sentry.set_user(username: @user.username, email: @user.email)
   end
 end
