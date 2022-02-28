@@ -3,5 +3,5 @@ Sentry.init do |config|
   # config.traces_sample_rate = 1.0
   config.debug = true
   config.capture_exception_frame_locals = true
-  config.release = 'test-neel-release-2'
+  config.release = "test-sessions-#{Time.now.utc}"
 end
