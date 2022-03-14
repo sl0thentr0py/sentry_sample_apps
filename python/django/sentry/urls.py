@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from errors.views import bork, transaction
+from errors.views import bork, transaction, rq_task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('errors/', bork),
-    path('transaction/<int:num>', transaction)
+    path('transaction/<int:num>', transaction),
+    path('rq_task/', rq_task)
 ]

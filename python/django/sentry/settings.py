@@ -14,9 +14,10 @@ from pathlib import Path
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
 sentry_sdk.init(
-    integrations=[DjangoIntegration()],
+    integrations=[DjangoIntegration(), RedisIntegration()],
     traces_sample_rate=1.0,
     send_default_pii=True,
     debug=True
@@ -48,7 +49,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'errors.apps.ErrorsConfig',
+    'django_rq',
 ]
+
+RQ_QUEUES = {
+        'default': {
+            'HOST': 'localhost',
+            'PORT': 6379,
+            'DB': 0,
+            'DEFAULT_TIMEOUT': 360,
+            },
+        }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
