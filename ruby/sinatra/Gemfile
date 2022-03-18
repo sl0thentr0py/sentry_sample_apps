@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.7.2'
+
+gem 'pry'
+gem 'pry-byebug'
+gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
+gem 'sinatra'
+gem 'sinatra-cors'
