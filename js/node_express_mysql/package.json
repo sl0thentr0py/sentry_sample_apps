@@ -1,0 +1,12 @@
+{
+  "name": "node_express_mysql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@sentry/node": "^6.19.3",
+    "@sentry/tracing": "^6.19.3",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
+  }
+}
