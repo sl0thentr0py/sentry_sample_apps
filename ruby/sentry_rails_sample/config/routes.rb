@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   match 'checkout', to: 'payments#checkout', via: [:get, :post]
   get 'error', to: 'payments#error'
   get 'success', to: 'payments#success'
+  get 'cable_test', to: 'payments#cable_test'
 end

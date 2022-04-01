@@ -1,5 +1,5 @@
 class PaymentsController < ActionController::Base
-  before_action :set_sentry_user
+  before_action :set_sentry_user, except: :cable
   skip_forgery_protection
 
   def error
@@ -32,6 +32,9 @@ class PaymentsController < ActionController::Base
     payment.update(amount: discounted_amount)
 
     @success = payment.charge
+  end
+
+  def cable_test
   end
 
   private
