@@ -10,9 +10,9 @@ pyparsing==3.0.7
 pytz==2021.3
 redis==4.1.4
 rq==1.10.1
--e git+git@github.com:getsentry/sentry-python.git@a6cec41a2f4889d54339d3249db1acbe0c680e46#egg=sentry_sdk
+-e git+ssh://git@github.com/getsentry/sentry-python.git@6b380b8d7c19a6daa679458eb75e87cb83640b03#egg=sentry_sdk
 sqlparse==0.4.2
-typing-extensions==4.1.1
+typing_extensions==4.1.1
 urllib3==1.26.7
 wrapt==1.14.0
 zipp==3.7.0
