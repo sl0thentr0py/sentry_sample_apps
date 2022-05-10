@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from .tasks import foobar_task
+from sentry_sdk.hub import Hub
 
 # Create your views here.
 def bork(request):
@@ -7,6 +8,9 @@ def bork(request):
 
 
 def transaction(request, num):
+    transaction = Hub.current.scope.transaction
+    if transaction:
+        transaction.set_measurement("neel.custom.metric", 123, unit="second")
     return HttpResponse(f"num {num}")
 
 

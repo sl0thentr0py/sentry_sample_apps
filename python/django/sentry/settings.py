@@ -20,7 +20,8 @@ sentry_sdk.init(
     integrations=[DjangoIntegration(), RedisIntegration()],
     traces_sample_rate=1.0,
     send_default_pii=True,
-    debug=True
+    debug=True,
+    _experiments={"custom_measurements": True}
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
