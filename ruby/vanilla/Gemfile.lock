@@ -1,11 +1,8 @@
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.2.1)
+    sentry-ruby (5.3.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      sentry-ruby-core (= 5.2.1)
-    sentry-ruby-core (5.2.1)
-      concurrent-ruby
 
 GEM
   remote: https://rubygems.org/

@@ -16,7 +16,12 @@ sentry_sdk.init(
 async def homepage(request):
     return JSONResponse({'hello': 'world'})
 
+def exception(request):
+    1 / 0
+    return JSONResponse({'shouldnt' : 'work'})
+
 
 app = Starlette(debug=True, routes=[
     Route('/', homepage),
+    Route('/exc', exception),
 ])
