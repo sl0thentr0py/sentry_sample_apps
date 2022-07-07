@@ -1,9 +1,12 @@
 require 'sentry-ruby'
-# require 'pry'
-# require 'pry-nav'
+require 'pry'
+require 'pry-nav'
 
 Sentry.init do |config|
   config.debug = true
+  config.before_send = lambda do |event, hint|
+    event
+  end
 end
 
 begin
