@@ -8,9 +8,6 @@ def bork(request):
 
 
 def transaction(request, num):
-    transaction = Hub.current.scope.transaction
-    if transaction:
-        transaction.set_measurement("neel.custom.metric", 123, unit="second")
     return HttpResponse(f"num {num}")
 
 
