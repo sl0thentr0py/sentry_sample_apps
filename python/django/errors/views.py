@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from .tasks import foobar_task
+from .tasks import rq_task as rqt, celery_task as ct
 from sentry_sdk.hub import Hub
 
 # Create your views here.
@@ -12,5 +12,10 @@ def transaction(request, num):
 
 
 def rq_task(request):
-    foobar_task.delay()
-    return HttpResponse("Task run successful")
+    rqt.delay()
+    return HttpResponse("RQ Task run successful")
+
+
+def celery_task(request):
+    ct.delay()
+    return HttpResponse("Celery Task run successful")

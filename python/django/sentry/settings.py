@@ -65,6 +65,8 @@ RQ_QUEUES = {
             },
         }
 
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
