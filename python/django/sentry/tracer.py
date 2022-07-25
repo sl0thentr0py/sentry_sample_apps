@@ -17,8 +17,8 @@ def init_tracer():
         caller_filename = caller.f_code.co_filename
 
         if MODE == 2:
-            if ("sentry-sdk" not in func_filename or
-                "sentry-sdk" in func_filename and "sentry-sdk" in caller_filename):
+            if ("sentry_sdk" not in func_filename or
+                "sentry_sdk" in func_filename and "sentry_sdk" in caller_filename):
                 return
 
         print(f"Calling {func_filename}:{func_line_no} {func_name} from:")
