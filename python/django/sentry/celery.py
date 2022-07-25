@@ -27,5 +27,5 @@ def debug_task(self):
 @periodic_task(run_every=timedelta(seconds=5))
 def secondly():
     print("wassup")
-    raise Exception("celery exc")
+    debug_task.apply_async()
 
