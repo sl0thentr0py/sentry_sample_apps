@@ -24,8 +24,8 @@ sentry_sdk.init(
     _experiments={"custom_measurements": True}
 )
 
-from .tracer import init_tracer
-init_tracer()
+# from .tracer import init_tracer
+# init_tracer()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -64,6 +64,8 @@ RQ_QUEUES = {
             'DEFAULT_TIMEOUT': 360,
             },
         }
+
+CELERY_BROKER_URL = "redis://localhost:6379/0"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
