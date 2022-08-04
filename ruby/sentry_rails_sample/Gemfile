@@ -30,8 +30,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
 
-gem 'skylight'
-
 gem 'faker'
 
 gem 'pry'
