@@ -39,5 +39,4 @@
 yarn-debug.log*
 .yarn-integrity
 
-rails
 rails_test

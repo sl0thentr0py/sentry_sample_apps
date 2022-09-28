@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get 'error', to: 'payments#error'
   get 'success', to: 'payments#success'
   get 'cable_test', to: 'payments#cable_test'
+  get 'ds/items', to: 'ds#items'
 end
