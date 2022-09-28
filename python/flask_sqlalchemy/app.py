@@ -1,5 +1,5 @@
 import sentry_sdk
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -32,6 +32,10 @@ def count():
     count = User.query.count()
     return f"<p>count: {count} </p>"
 
+
+@app.route('/ds')
+def get_tasks():
+    return jsonify({'extenal': 42})
 
 
 if __name__ == "__main__":

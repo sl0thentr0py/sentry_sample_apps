@@ -5,7 +5,15 @@ class DsController < ApplicationController
   def items
     items = []
     items = Item.joins(:payment).where(payments: { user: @user }) if @user
-    render(json: items)
+
+    # turn flask on in same repo/python/flask_sqlalchemy for this
+    begin
+      res = HTTParty.get('http://127.0.0.1:5000/ds', format: :plain)
+      external = JSON.parse(res)
+    rescue
+    end
+
+    render(json: { items: items }.merge(external))
   end
 
   private
