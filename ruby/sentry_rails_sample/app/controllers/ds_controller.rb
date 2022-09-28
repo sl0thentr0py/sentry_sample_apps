@@ -11,9 +11,20 @@ class DsController < ApplicationController
       res = HTTParty.get('http://127.0.0.1:5000/ds', format: :plain)
       external = JSON.parse(res)
     rescue
+    ensure
+      external ||= {}
     end
 
     render(json: { items: items }.merge(external))
+  end
+
+  def ds_rails_head
+    span = Sentry.get_current_scope.get_span
+
+    if span
+      @sentry_trace = span.to_sentry_trace
+      @baggage = span.to_baggage
+    end
   end
 
   private
