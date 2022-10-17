@@ -28,8 +28,13 @@ gem 'httparty'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# sentry
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
+
+# otel
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-instrumentation-all'
 
 gem 'faker'
 

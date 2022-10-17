@@ -42,6 +42,6 @@ class PaymentsController < ActionController::Base
   def set_sentry_user
     @user = User.find_by_email('jane.doe@example.com')
     return unless @user
-    Sentry.set_user(username: @user.username, email: @user.email)
+    Sentry.set_user(username: @user.username, email: @user.email) if defined?(Sentry)
   end
 end
