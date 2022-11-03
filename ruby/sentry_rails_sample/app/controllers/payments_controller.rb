@@ -7,6 +7,7 @@ class PaymentsController < ActionController::Base
   end
 
   def success
+    HTTParty.get('https://www.google.com')
     render(plain: "success")
   end
 

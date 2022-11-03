@@ -291,6 +291,7 @@ GEM
       opentelemetry-semantic_conventions
     opentelemetry-semantic_conventions (1.8.0)
       opentelemetry-api (~> 1.0)
+    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -360,7 +361,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -402,6 +402,7 @@ DEPENDENCIES
   listen (~> 3.3)
   opentelemetry-instrumentation-all
   opentelemetry-sdk
+  pg
   pry
   pry-byebug
   puma (~> 5.0)
@@ -411,7 +412,6 @@ DEPENDENCIES
   sentry-rails!
   sentry-ruby!
   spring
-  sqlite3
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

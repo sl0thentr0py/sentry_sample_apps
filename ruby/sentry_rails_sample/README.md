@@ -13,6 +13,10 @@ Things you may want to cover:
 
 * Database creation
 
+```
+docker run -p 5432:5432 --name rails-postgres -e POSTGRES_USER=rails -e POSTGRES_PASSWORD=rails -d postgres
+```
+
 * Database initialization
 
 * How to run the test suite
@@ -22,3 +26,4 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
