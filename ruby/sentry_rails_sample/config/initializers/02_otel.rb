@@ -6,7 +6,4 @@ OpenTelemetry::SDK.configure do |c|
   c.add_span_processor(Sentry::OpenTelemetry::SpanProcessor.new)
 end
 
-Rails.application.config.middleware.move_after(
-  Sentry::Rails::CaptureExceptions,
-  OpenTelemetry::Instrumentation::Rack::Middlewares::TracerMiddleware
-)
+OpenTelemetry.propagation = Sentry::OpenTelemetry::Propagator.new

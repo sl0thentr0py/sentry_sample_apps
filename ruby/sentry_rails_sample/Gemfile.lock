@@ -1,4 +1,11 @@
 PATH
+  remote: ../../../sdks/sentry-ruby/sentry-opentelemetry
+  specs:
+    sentry-opentelemetry (5.5.0)
+      opentelemetry-sdk (>= 1.0)
+      sentry-ruby (~> 5.5.0)
+
+PATH
   remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
     sentry-rails (5.5.0)
@@ -409,6 +416,7 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   sass-rails (>= 6)
   selenium-webdriver
+  sentry-opentelemetry!
   sentry-rails!
   sentry-ruby!
   spring
