@@ -2,7 +2,7 @@ PATH
   remote: ../../../sdks/sentry-ruby/sentry-opentelemetry
   specs:
     sentry-opentelemetry (5.6.0)
-      opentelemetry-sdk (>= 1.0)
+      opentelemetry-sdk (~> 1.0)
       sentry-ruby (~> 5.6.0)
 
 PATH
