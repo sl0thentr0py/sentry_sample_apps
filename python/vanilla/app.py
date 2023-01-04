@@ -1,11 +1,13 @@
-import time
+import datetime
 import sentry_sdk
-from sentry_sdk import start_span, start_transaction
+from sentry_sdk.utils import format_timestamp
 
 
-sentry_sdk.init(debug=True, traces_sample_rate=1.0)
+def before_send(event, hint):
+    event["extra"] = { "started_at": None }
+    return event
 
-with start_transaction(name="neel tx"):
-    with start_span(op="neel op", description="neel's span") as span:
-        span.set_tag("neel.boolean.tag", True)
-        time.sleep(1)
+
+sentry_sdk.init(debug=True, traces_sample_rate=1.0, before_send=before_send)
+
+1 / 0
