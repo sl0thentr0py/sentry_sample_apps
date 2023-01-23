@@ -4,7 +4,9 @@ from sentry_sdk.utils import format_timestamp
 
 
 def before_send(event, hint):
-    event["extra"] = { "started_at": None }
+    event["request"] = { "headers": [["Foo", "Bar"]] }
+    event["_meta"] = { "request": { "headers": { "0": { "1" : { "": { "rem": [["@password:filter","s",0,10]],"len":15}}}}}}
+
     return event
 
 
