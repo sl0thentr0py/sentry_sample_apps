@@ -11,6 +11,12 @@ class PaymentsController < ActionController::Base
     render(plain: "success")
   end
 
+  def measurement
+    transaction = Sentry.get_current_scope.get_transaction
+    transaction.set_measurement("metrics.foo", 0.5, "millisecond")
+    render(plain: "metrics.foo: 0.5 ms")
+  end
+
   def checkout
     return unless request.post?
 

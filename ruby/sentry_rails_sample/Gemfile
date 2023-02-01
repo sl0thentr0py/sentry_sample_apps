@@ -39,11 +39,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # sentry
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
-gem 'sentry-opentelemetry', path: '~/sentry/sdks/sentry-ruby/sentry-opentelemetry'
-
-# otel
-gem 'opentelemetry-sdk'
-gem 'opentelemetry-instrumentation-all'
 
 gem 'faker'
 
