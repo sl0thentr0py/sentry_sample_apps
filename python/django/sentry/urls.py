@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from errors.views import bork, transaction, rq_task, celery_task
+from errors.views import bork, transaction, rq_task, celery_task, scope1, scope2
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('errors/', bork),
+    path('scope1/', scope1),
+    path('scope2/', scope2),
     path('transaction/<int:num>', transaction),
     path('rq_task/', rq_task),
     path('celery_task/', celery_task),
