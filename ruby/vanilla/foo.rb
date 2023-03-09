@@ -4,13 +4,13 @@ require 'pry-nav'
 
 Sentry.init do |config|
   config.debug = true
-  config.before_send = lambda do |event, hint|
-    event
-  end
+  config.traces_sample_rate = 1.0
 end
 
-begin
-  1 / 0
-rescue => e
-  Sentry.capture_exception(e)
+
+transaction = Sentry.start_transaction(name: 'testing long desc')
+long_ass_string = (1..10000).map(&:to_s).join('-')
+transaction.with_child_span(description: long_ass_string) do
+  sleep(1)
 end
+transaction.finish
