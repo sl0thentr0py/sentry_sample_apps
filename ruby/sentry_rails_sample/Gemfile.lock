@@ -10,7 +10,6 @@ PATH
   specs:
     sentry-ruby (5.8.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      stackprof (~> 0.2.23)
 
 GEM
   remote: https://rubygems.org/
@@ -249,6 +248,7 @@ DEPENDENCIES
   sentry-rails!
   sentry-ruby!
   spring
+  stackprof
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

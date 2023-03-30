@@ -7,7 +7,9 @@ class PaymentsController < ActionController::Base
   end
 
   def success
+    foo
     HTTParty.get('https://www.google.com')
+    bar
     render(plain: "success")
   end
 
@@ -45,6 +47,15 @@ class PaymentsController < ActionController::Base
   end
 
   private
+
+  def foo
+    sleep 0.2
+  end
+
+  def bar
+    (1e6).to_i.times { 2*2 }
+  end
+
 
   def set_sentry_user
     @user = User.find_by_email('jane.doe@example.com')
