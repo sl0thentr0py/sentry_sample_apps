@@ -1,25 +1,16 @@
 from quart import Quart
-
-import sentry_sdk
-
-sentry_sdk.init(
-    traces_sample_rate=1.0,
-    send_default_pii=True,
-    debug=True
-)
+from sentry_sdk import init
+from sentry_sdk.integrations.quart import QuartIntegration
 
 app = Quart(__name__)
-# app.config['PROPAGATE_EXCEPTIONS'] = True
 
-@app.route('/')
-async def index():
-     return 'Hello World'
+init(
+    integrations=[QuartIntegration()],
+    traces_sample_rate=1.0,
+)
 
+@app.route('/health', methods=['GET'])
+def health():
+    return {'status': 'pass'}
 
-@app.route('/error')
-async def error():
-    raise ValueError('quart neel exception')
-
-
-if __name__ == "__main__":
-    app.run()
+app.run()
