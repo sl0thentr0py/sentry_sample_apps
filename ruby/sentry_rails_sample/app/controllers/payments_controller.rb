@@ -1,5 +1,5 @@
 class PaymentsController < ActionController::Base
-  before_action :set_sentry_user, except: :cable
+  before_action :set_sentry_user, except: [:cable, :profile]
   skip_forgery_protection
 
   def error
@@ -46,7 +46,20 @@ class PaymentsController < ActionController::Base
   def cable_test
   end
 
+  def profile
+    slow_ass_function
+    render(plain: "ok")
+  end
+
   private
+
+  def slow_ass_function
+    garbage_code
+  end
+
+  def garbage_code
+    (1e7).to_i.times { 2 * 2 }
+  end
 
   def foo
     sleep 0.2

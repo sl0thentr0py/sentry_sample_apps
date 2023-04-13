@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get 'cable_test', to: 'payments#cable_test'
   get 'ds/items', to: 'ds#items'
   get 'ds_rails_head', to: 'ds#ds_rails_head'
+  get 'profile', to: 'payments#profile'
 end
