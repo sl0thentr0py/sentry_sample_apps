@@ -24,7 +24,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-@periodic_task(run_every=timedelta(seconds=5))
+# @periodic_task(run_every=timedelta(seconds=5))
 def secondly():
     print("wassup")
     debug_task.apply_async()

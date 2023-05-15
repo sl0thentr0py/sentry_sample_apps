@@ -13,6 +13,11 @@ class PaymentsController < ActionController::Base
     render(plain: "success")
   end
 
+  def http
+    HTTParty.get('https://username:password@example.com/foo?bar=23&baz=cow#fragment_foobar')
+    render(plain: "success")
+  end
+
   def measurement
     transaction = Sentry.get_current_scope.get_transaction
     transaction.set_measurement("metrics.foo", 0.5, "millisecond")

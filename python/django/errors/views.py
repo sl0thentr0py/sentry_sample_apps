@@ -1,9 +1,12 @@
 import time
 import threading
+from random import choice
+from string import ascii_lowercase
+
 from django.http import HttpResponse
 from sentry_sdk import configure_scope, add_breadcrumb, start_span
 
-from .tasks import rq_task as rqt, celery_task as ct
+from .tasks import rq_task as rqt, celery_task as ct, tell_the_world
 
 # Create your views here.
 def bork(request):
@@ -46,5 +49,18 @@ def rq_task(request):
 
 
 def celery_task(request):
-    ct.delay()
+    string_val = "".join(choice(ascii_lowercase) for i in range(10000))
+
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+    tell_the_world.delay(string_val)
+
     return HttpResponse("Celery Task run successful")

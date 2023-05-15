@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get 'ds/items', to: 'ds#items'
   get 'ds_rails_head', to: 'ds#ds_rails_head'
   get 'profile', to: 'payments#profile'
+  get 'http', to: 'payments#http'
 end

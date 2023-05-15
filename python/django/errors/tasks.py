@@ -14,3 +14,9 @@ def celery_task():
     a = 42
     raise Exception("Exception in celery_task")
     return 42
+
+
+@shared_task
+def tell_the_world(msg):
+    print("Thats my message to the world: %s" % msg)
+
