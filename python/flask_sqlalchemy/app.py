@@ -1,12 +1,12 @@
 import sentry_sdk
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
 
 sentry_sdk.init(
     traces_sample_rate=1.0,
-    send_default_pii=True,
-    debug=True
+    # send_default_pii=True,
+    # debug=True
 )
 
 
@@ -36,6 +36,12 @@ def count():
 @app.route('/ds')
 def get_tasks():
     return jsonify({'extenal': 42})
+
+
+@app.route("/scrubber", methods=['POST'])
+def test():
+    raise Exception("bla")
+    return "<p>Hello, World!</p>"
 
 
 if __name__ == "__main__":
