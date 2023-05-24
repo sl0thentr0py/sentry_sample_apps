@@ -1,15 +1,29 @@
-import datetime
 import sentry_sdk
-from sentry_sdk.utils import format_timestamp
+from threading import Thread
+from time import sleep
 
+sentry_sdk.init()
 
-def before_send(event, hint):
-    event["request"] = { "headers": [["Foo", "Bar"]] }
-    event["_meta"] = { "request": { "headers": { "0": { "1" : { "": { "rem": [["@password:filter","s",0,10]],"len":15}}}}}}
+def work():
+    for i in range(500):
+        try:
+            1 / 0
+        except Exception:
+            sentry_sdk.capture_exception()
 
-    return event
+def size():
+    return sentry_sdk.Hub.current.client.transport._worker._queue.qsize()
 
+def measure():
+    while size() > 0:
+        sleep(0.1)
+        print(f"queue size {size()}")
 
-sentry_sdk.init(debug=True, traces_sample_rate=1.0, before_send=before_send)
+t1 = Thread(target=work)
+t2 = Thread(target=measure)
 
-1 / 0
+t1.run()
+t2.run()
+
+times = sentry_sdk.Hub.current.client.transport._worker._times
+print(f"min: {min(times)}, mean: {sum(times) / len(times)}, max: {max(times)}")
