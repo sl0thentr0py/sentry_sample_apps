@@ -1,29 +1,28 @@
+import pprint
+import contextlib
+import tracemalloc
 import sentry_sdk
-from threading import Thread
-from time import sleep
+
+@contextlib.contextmanager
+def measure():
+    filters = [tracemalloc.Filter(True, '**sentry_sdk**')]
+
+    if not tracemalloc.is_tracing():
+        tracemalloc.start()
+
+    snapshot1 = tracemalloc.take_snapshot().filter_traces(filters)
+
+    yield
+
+    snapshot2 = tracemalloc.take_snapshot().filter_traces(filters)
+    snapshot = snapshot2.compare_to(snapshot1, 'lineno')
+    pprint.pprint(snapshot)
+
 
 sentry_sdk.init()
 
-def work():
-    for i in range(500):
-        try:
-            1 / 0
-        except Exception:
-            sentry_sdk.capture_exception()
-
-def size():
-    return sentry_sdk.Hub.current.client.transport._worker._queue.qsize()
-
-def measure():
-    while size() > 0:
-        sleep(0.1)
-        print(f"queue size {size()}")
-
-t1 = Thread(target=work)
-t2 = Thread(target=measure)
-
-t1.run()
-t2.run()
-
-times = sentry_sdk.Hub.current.client.transport._worker._times
-print(f"min: {min(times)}, mean: {sum(times) / len(times)}, max: {max(times)}")
+with measure():
+    try:
+        1 / 0
+    except Exception:
+        sentry_sdk.capture_exception()
