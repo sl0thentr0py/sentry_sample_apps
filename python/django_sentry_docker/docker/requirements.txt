@@ -1,0 +1,4 @@
+Django>=3.2,<3.3
+psycopg2-binary>=2.9,<2.10
+uwsgi>=2.0,<2.1
+sentry_sdk>=1.26.0
