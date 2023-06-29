@@ -1,9 +1,12 @@
+from random import randint
+
 from locust import HttpUser, task
 
 class RailsUser(HttpUser):
-    @task
+    @task(10)
     def success(self):
-        self.client.get("/success")
-        with self.client.get("/success", catch_response=True) as response:
-            if response.text != "success":
-                response.failure("Got wrong response")
+        self.client.get(f"/transaction/{randint(1, 100)}")
+
+    @task
+    def bork(self):
+        self.client.get("/bork")
