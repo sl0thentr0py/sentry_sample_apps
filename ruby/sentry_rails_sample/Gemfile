@@ -10,8 +10,8 @@ gem 'pry-byebug'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 
 # db
-gem 'sqlite3'
-# gem 'pg'
+# gem 'sqlite3'
+gem 'pg'
 
 # Use Puma as the app server
 gem 'puma'

@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2021_12_17_161248) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "items", force: :cascade do |t|
-    t.integer "payment_id", null: false
+    t.bigint "payment_id", null: false
     t.string "name"
     t.integer "quantity"
     t.integer "price"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_161248) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "amount"
     t.string "currency"
     t.string "address"
