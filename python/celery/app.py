@@ -1,3 +1,3 @@
-from tasks import task
+from tasks import task, try_dividing_by_zero
 
-task.delay()
+try_dividing_by_zero.delay()

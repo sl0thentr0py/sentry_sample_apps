@@ -10,7 +10,7 @@ app = Celery(
 
 
 def init_sentry():
-    sentry_sdk.init()
+    sentry_sdk.init(traces_sample_rate=1.0, debug=True)
 
 
 @signals.celeryd_init.connect
