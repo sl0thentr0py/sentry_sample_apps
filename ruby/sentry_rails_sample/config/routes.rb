@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'ds_rails_head', to: 'ds#ds_rails_head'
   get 'profile', to: 'payments#profile'
   get 'http', to: 'payments#http'
+  get 'twp', to: 'payments#twp'
 end

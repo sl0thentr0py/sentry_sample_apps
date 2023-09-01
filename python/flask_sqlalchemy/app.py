@@ -1,4 +1,5 @@
 import sentry_sdk
+import requests
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -42,6 +43,17 @@ def get_tasks():
 def test():
     raise Exception("bla")
     return "<p>Hello, World!</p>"
+
+
+@app.route("/twp")
+def twp():
+    requests.get("http://localhost:3000/error")
+    raise Exception("twp flask")
+
+
+@app.route("/error")
+def error():
+    return 420.69 / 0
 
 
 if __name__ == "__main__":
