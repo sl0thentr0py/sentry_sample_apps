@@ -2,7 +2,7 @@ from time import sleep, time
 import sentry_sdk
 
 
-sentry_sdk.init(traces_sample_rate=1.0, _experiments={"enable_backpressure_handling": True})
+sentry_sdk.init(traces_sample_rate=1.0, debug=True)
 
 def size():
     q = sentry_sdk.Hub.current.client.transport._worker._queue
