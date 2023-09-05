@@ -45,6 +45,8 @@ class PaymentsController < ActionController::Base
       payment.items << Item.new(item_params)
     end
 
+    Redis.new.set("mykey", "hello world")
+
     payment.amount = payment.items.map { |i| i.quantity * i.price }.sum
     payment.save
 
