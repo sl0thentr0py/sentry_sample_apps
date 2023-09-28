@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get 'profile', to: 'payments#profile'
   get 'http', to: 'payments#http'
   get 'twp', to: 'payments#twp'
+  get 'sidekiq', to: 'payments#sidekiq'
 end

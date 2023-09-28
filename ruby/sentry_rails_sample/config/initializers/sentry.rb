@@ -5,5 +5,5 @@ Sentry.init do |config|
   # config.debug = true
   config.logger.level = ::Logger::DEBUG
   config.include_local_variables = true
-  config.release = "test-sessions-#{Time.now.utc}"
+  config.release = "test-neel-#{Time.now.utc}"
 end

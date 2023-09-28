@@ -1,15 +1,22 @@
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (5.10.0)
+    sentry-rails (5.11.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.10.0)
+      sentry-ruby (~> 5.11.0)
 
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.10.0)
+    sentry-ruby (5.11.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+
+PATH
+  remote: ../../../sdks/sentry-ruby/sentry-sidekiq
+  specs:
+    sentry-sidekiq (5.11.0)
+      sentry-ruby (~> 5.11.0)
+      sidekiq (>= 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -195,6 +202,10 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
+    sidekiq (6.5.5)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.5.0)
     spring (3.1.1)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -253,6 +264,8 @@ DEPENDENCIES
   selenium-webdriver
   sentry-rails!
   sentry-ruby!
+  sentry-sidekiq!
+  sidekiq
   spring
   stackprof
   turbolinks (~> 5)

@@ -64,6 +64,11 @@ class PaymentsController < ActionController::Base
     render(plain: "ok")
   end
 
+  def sidekiq
+    ExampleJob.set(wait: 5.seconds).perform_later
+    render(plain: 'queued')
+  end
+
   private
 
   def slow_ass_function
