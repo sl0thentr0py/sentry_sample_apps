@@ -2,6 +2,7 @@ class ExampleJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    420 / 0
+    HTTParty.get('https://www.google.com')
+    User.all.to_a
   end
 end
