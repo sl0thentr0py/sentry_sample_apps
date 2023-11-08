@@ -1,44 +1,35 @@
 from time import sleep, time
 import sentry_sdk
+from sentry_sdk import push_scope, capture_message
 
+import logging
 
-sentry_sdk.init(traces_sample_rate=1.0, debug=True)
+log = logging.getLogger('urllib3')
+log.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+log.addHandler(ch)
 
-def size():
-    q = sentry_sdk.Hub.current.client.transport._worker._queue
-    print(f"size: {q.qsize()}, full: {q.full()}")
+sentry_sdk.init(debug=True)
 
+def send():
+    with push_scope() as scope:
+        scope.add_attachment(bytes=b"Hello World! " * 200000, filename="attachment.txt")
+        capture_message('Boo')
 
-last = time()
-times = []
+# # 15 min
+# end = time() + 15 * 60
 
-print("running heavy load")
-for i in range(50):
-    for j in range(1000):
-        with sentry_sdk.start_transaction(name='backpressure'):
-            for i in range(10):
-                with sentry_sdk.start_span(op='sleep', description='zzz'):
-                    pass
-    now = time()
-    times.append(now - last)
-    last = now
+# while time() < end:
+#     send()
+#     sleep(0.1)
 
-print(times)
-print("waiting for stuff to clear")
-sleep(5)
-
-times = []
-print("running normal load")
 for i in range(10):
-    for j in range(50):
-        with sentry_sdk.start_transaction(name='backpressure'):
-            for i in range(10):
-                with sentry_sdk.start_span(op='sleep', description='zzz'):
-                    pass
-    now = time()
-    times.append(now - last)
-    last = now
-    sleep(5)
+    send()
 
-print(times)
-sentry_sdk.flush(10)
+sleep(15*60)
+
+for i in range(10):
+    send()
+
+sentry_sdk.flush()
