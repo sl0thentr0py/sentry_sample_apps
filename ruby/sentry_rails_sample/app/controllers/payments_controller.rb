@@ -65,7 +65,7 @@ class PaymentsController < ActionController::Base
   end
 
   def sidekiq
-    ExampleJob.set(wait: 5.seconds).perform_later
+    SidekiqJob.perform_in(5.seconds, 'https://google.com')
     render(plain: 'queued')
   end
 
