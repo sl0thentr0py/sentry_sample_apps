@@ -10,7 +10,7 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
 log.addHandler(ch)
 
-sentry_sdk.init(debug=True)
+sentry_sdk.init()
 
 def send():
     with push_scope() as scope:
@@ -27,9 +27,9 @@ def send():
 for i in range(10):
     send()
 
-sleep(15*60)
+# sleep(15*60)
 
-for i in range(10):
-    send()
+# for i in range(10):
+#     send()
 
 sentry_sdk.flush()
