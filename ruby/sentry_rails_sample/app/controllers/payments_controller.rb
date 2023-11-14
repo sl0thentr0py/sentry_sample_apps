@@ -65,7 +65,7 @@ class PaymentsController < ActionController::Base
   end
 
   def sidekiq
-    SidekiqJob.perform_in(5.seconds, 'https://google.com')
+    ::OuterLongAssName::InnerLongAssNameLongAssNameLongAssName::SidekiqJob.perform_in(5.seconds, 'https://google.com')
     render(plain: 'queued')
   end
 
