@@ -1,0 +1,5 @@
+example_job:
+  cron: "* * * * *"
+  class: "ExampleJob"
+  args:
+    - https://www.google.com
