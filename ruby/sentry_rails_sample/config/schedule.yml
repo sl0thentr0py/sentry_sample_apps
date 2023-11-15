@@ -3,3 +3,9 @@ example_job:
   class: "ExampleJob"
   args:
     - https://www.google.com
+
+sidekiq_long_job:
+  cron: "*/2 * * * *"
+  class: "OuterLongAssName::InnerLongAssNameLongAssNameLongAssName::SidekiqJob"
+  args:
+    - https://www.google.com
