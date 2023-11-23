@@ -106,7 +106,7 @@ GEM
     faker (2.22.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
-    fugit (1.8.1)
+    fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     globalid (1.0.0)
@@ -194,6 +194,8 @@ GEM
       connection_pool
     regexp_parser (2.6.0)
     rubyzip (2.3.2)
+    rufus-scheduler (3.9.1)
+      fugit (~> 1.1, >= 1.1.6)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -213,9 +215,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
-    sidekiq-cron (1.9.1)
-      fugit (~> 1.8)
-      sidekiq (>= 4.2.1)
+    sidekiq-scheduler (5.0.3)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 6, < 8)
+      tilt (>= 1.4.0)
     spring (3.1.1)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -276,7 +279,7 @@ DEPENDENCIES
   sentry-ruby!
   sentry-sidekiq!
   sidekiq
-  sidekiq-cron
+  sidekiq-scheduler
   spring
   stackprof
   turbolinks (~> 5)

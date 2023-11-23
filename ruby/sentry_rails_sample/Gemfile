@@ -31,7 +31,8 @@ gem 'httparty'
 
 # job stuff
 gem 'sidekiq'
-gem "sidekiq-cron"
+# gem "sidekiq-cron"
+gem "sidekiq-scheduler"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
