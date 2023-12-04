@@ -7,4 +7,5 @@ Sentry.init do |config|
   config.include_local_variables = true
   config.release = "test-neel-#{Time.now.utc}"
   config.enabled_patches += [:sidekiq_scheduler]
+  config.spotlight = true
 end

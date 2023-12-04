@@ -7,8 +7,7 @@ Sentry.init do |config|
   config.traces_sample_rate = 1.0
 end
 
-schedule = Sentry::Cron::MonitorSchedule::Crontab.new("blablabla")
-config = Sentry::Cron::MonitorConfig.new(schedule)
-Sentry.capture_check_in("crontab_bad_test", :ok, monitor_config: config)
+config = Sentry::Cron::MonitorConfig.from_interval(300, :minute)
+Sentry.capture_check_in("Crontab_300", :ok, monitor_config: config)
 
 sleep 1
