@@ -6,6 +6,8 @@ class PaymentsController < ActionController::Base
     1 / 0
   end
 
+  def view_error;end
+
   def twp
     HTTParty.get('http://127.0.0.1:5000/error')
     420 / 0
