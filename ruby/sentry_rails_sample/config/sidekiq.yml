@@ -1,7 +1,7 @@
 :scheduler:
   :schedule:
     example_job_scheduler:
-      cron: '* * * * *'
+      cron: '*/1 * * * * Europe/Berlin' # Runs every 1 minute
       class: "ExampleJob"
       args:
         - https://www.google.com

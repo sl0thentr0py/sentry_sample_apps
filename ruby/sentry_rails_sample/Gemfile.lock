@@ -1,21 +1,21 @@
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (5.15.0)
+    sentry-rails (5.15.2)
       railties (>= 5.0)
-      sentry-ruby (~> 5.15.0)
+      sentry-ruby (~> 5.15.2)
 
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.15.0)
+    sentry-ruby (5.15.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
 
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-sidekiq
   specs:
-    sentry-sidekiq (5.15.0)
-      sentry-ruby (~> 5.15.0)
+    sentry-sidekiq (5.15.2)
+      sentry-ruby (~> 5.15.2)
       sidekiq (>= 3.0)
 
 GEM
@@ -311,6 +311,7 @@ GEM
     zeitwerk (2.6.12)
 
 PLATFORMS
+  x86_64-darwin-20
   x86_64-darwin-22
 
 DEPENDENCIES
@@ -343,4 +344,4 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 BUNDLED WITH
-   2.4.10
+   2.4.6
