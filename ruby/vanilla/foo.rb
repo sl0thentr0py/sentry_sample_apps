@@ -2,10 +2,19 @@ require 'sentry-ruby'
 require 'debug'
 
 Sentry.init do |config|
-  config.logger = Logger.new($stdout)
+  config.debug = true
+  config.logger.level = ::Logger::DEBUG
 end
 
-transport = Sentry.get_current_client.transport
+10.times do |i|
+  crumb = Sentry::Breadcrumb.new(
+    data: { foo: 42 },
+    category: 'crumb',
+    message: "crumb no: #{i}"
+  )
 
-100.times { transport.record_lost_event(:ratelimit_backoff, "event") }
-40.times { transport.record_lost_event(:backpressure, "transaction") }
+  Sentry.add_breadcrumb(crumb)
+end
+
+config = Sentry::Cron::MonitorConfig.from_interval(1, :minute)
+Sentry.capture_check_in('test-scope', :in_progress, monitor_config: config)
