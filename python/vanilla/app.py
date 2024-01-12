@@ -1,35 +1,45 @@
-from time import sleep, time
+import threading
+import urllib3
+
 import sentry_sdk
-from sentry_sdk import push_scope, capture_message
+from sentry_sdk.hub import Hub
+from sentry_sdk.scope import add_global_event_processor
 
-import logging
 
-log = logging.getLogger('urllib3')
-log.setLevel(logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-log.addHandler(ch)
+sentry_sdk.init(debug=True)
 
-sentry_sdk.init()
 
-def send():
-    with push_scope() as scope:
-        scope.add_attachment(bytes=b"Hello World! " * 200000, filename="attachment.txt")
-        capture_message('Boo')
+breadcrumbs = []
+lock = threading.Lock()
 
-# # 15 min
-# end = time() + 15 * 60
 
-# while time() < end:
-#     send()
-#     sleep(0.1)
+@add_global_event_processor
+def request_breadcrumb_processor(event, hint):
+    global lock
+    global breadcrumbs
 
-for i in range(10):
-    send()
+    with lock:
+        event["breadcrumbs"]["values"].extend(breadcrumbs)
 
-# sleep(15*60)
+    return event
 
-# for i in range(10):
-#     send()
 
-sentry_sdk.flush()
+def foo():
+    global lock
+    global breadcrumbs
+
+    http = urllib3.PoolManager()
+    http.request("GET", "https://httpbin.org/get")
+
+    with lock:
+        breadcrumbs.extend(Hub.current.scope._breadcrumbs)
+
+
+def bar():
+    sentry_sdk.capture_message("event with request")
+
+
+x = threading.Thread(target=foo)
+x.start()
+x.join()
+bar()
