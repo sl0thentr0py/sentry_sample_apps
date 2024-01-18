@@ -71,6 +71,21 @@ class PaymentsController < ActionController::Base
     render(plain: 'queued')
   end
 
+  def active_job
+    ExampleJob.perform_later('https://google.com')
+    render(plain: 'queued')
+  end
+
+  def delayed_job
+    self.class.delay.delayed_job_fun('https://google.com')
+    render(plain: 'queued delayed job')
+  end
+
+  def self.delayed_job_fun(site, user: true)
+    HTTParty.get(site)
+    User.all.to_a if user
+  end
+
   private
 
   def slow_ass_function

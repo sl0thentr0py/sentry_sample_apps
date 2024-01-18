@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   get 'http', to: 'payments#http'
   get 'twp', to: 'payments#twp'
   get 'sidekiq', to: 'payments#sidekiq'
+  get 'active_job', to: 'payments#active_job' # can use with multiple adapters
+  get 'delayed_job', to: 'payments#delayed_job'
 end

@@ -31,9 +31,10 @@ gem 'redis', '~> 5.0'
 gem 'httparty'
 
 # job stuff
-gem 'sidekiq'
-# gem "sidekiq-cron"
-gem "sidekiq-scheduler"
+# gem 'sidekiq'
+# gem 'sidekiq-cron'
+# gem 'sidekiq-scheduler'
+gem 'delayed_job_active_record'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -45,7 +46,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'stackprof'
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
-gem 'sentry-sidekiq', path: '~/sentry/sdks/sentry-ruby/sentry-sidekiq'
+# gem 'sentry-sidekiq', path: '~/sentry/sdks/sentry-ruby/sentry-sidekiq'
+gem 'sentry-delayed_job', path: '~/sentry/sdks/sentry-ruby/sentry-delayed_job'
 
 gem 'faker'
 

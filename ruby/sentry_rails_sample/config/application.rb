@@ -13,7 +13,7 @@ module SentryRailsSample
 
     config.logger = Logger.new($stdout)
 
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :delayed_job
 
     # Configuration for the application, engines, and railties goes here.
     #
