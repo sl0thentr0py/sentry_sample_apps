@@ -19,6 +19,7 @@ defmodule HelloWeb.Router do
 
     get "/", PageController, :index
     get "/error", PageController, :error
+    get "/trace", PageController, :trace
   end
 
   # Other scopes may use custom stacks.

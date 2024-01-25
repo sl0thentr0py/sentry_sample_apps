@@ -49,7 +49,6 @@ config :phoenix, :json_library, Jason
 
 config :sentry,
   environment_name: Mix.env(),
-  included_environments: [:dev, :prod],
   enable_source_code_context: true,
   root_source_code_paths: [File.cwd!()]
 
