@@ -7,6 +7,10 @@ defmodule Hello.Application do
 
   @impl true
   def start(_type, _args) do
+    :opentelemetry_cowboy.setup()
+    OpentelemetryPhoenix.setup(adapter: :cowboy2)
+    OpentelemetryEcto.setup([:hello, :repo])
+
     children = [
       # Start the Ecto repository
       Hello.Repo,

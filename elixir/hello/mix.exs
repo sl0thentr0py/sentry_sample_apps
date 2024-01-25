@@ -50,7 +50,13 @@ defmodule Hello.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:hackney, "~> 1.8"},
-      {:sentry, path: "~/sentry/sdks/sentry-elixir"}
+      {:sentry, path: "~/sentry/sdks/sentry-elixir"},
+      {:opentelemetry, "~> 1.0"},
+      {:opentelemetry_api, "~> 1.0"},
+      {:opentelemetry_ecto, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 1.0"},
+      {:opentelemetry_cowboy, "~> 0.2"},
+      {:opentelemetry_exporter, "~> 1.0"}
     ]
   end
 
