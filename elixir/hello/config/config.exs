@@ -52,7 +52,15 @@ config :sentry,
   enable_source_code_context: true,
   root_source_code_paths: [File.cwd!()]
 
-config :opentelemetry, traces_exporter: {:otel_exporter_stdout, []}
+config :opentelemetry,
+  traces_exporter: :otlp
+
+config :opentelemetry_exporter,
+  otlp_protocol: :http_protobuf,
+  # otlp_traces_endpoint: "https://o447951.ingest.sentry.io/api/5572017/spans/?sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"
+  otlp_traces_endpoint: "http://localhost:3000/api/5572017/spans/",
+  otlp_headers: [{"x-sentry-auth", "Sentry sentry_version=7,sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"}]
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
