@@ -4,7 +4,7 @@ require 'debug'
 Sentry.init do |config|
   config.debug = true
   config.logger.level = ::Logger::DEBUG
-  config.enable_metrics = true
+  config.metrics.enabled = true
   config.enable_tracing = true
   config.release = "testing-metrics"
 end
