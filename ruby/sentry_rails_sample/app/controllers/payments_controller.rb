@@ -3,7 +3,9 @@ class PaymentsController < ActionController::Base
   skip_forgery_protection
 
   def error
-    1 / 0
+    raise "error"
+  ensure
+    puts "Ensure"
   end
 
   def view_error;end
