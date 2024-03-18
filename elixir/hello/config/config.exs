@@ -57,8 +57,8 @@ config :opentelemetry,
 
 config :opentelemetry_exporter,
   otlp_protocol: :http_protobuf,
-  # otlp_traces_endpoint: "https://o447951.ingest.sentry.io/api/5572017/spans/?sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"
-  otlp_traces_endpoint: "http://localhost:3000/api/5572017/spans/",
+  otlp_traces_endpoint: "https://o447951.ingest.sentry.io/api/5572017/spans/",
+  # otlp_traces_endpoint: "http://localhost:3000/api/5572017/spans/",
   otlp_headers: [{"x-sentry-auth", "Sentry sentry_version=7,sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"}]
 
 
