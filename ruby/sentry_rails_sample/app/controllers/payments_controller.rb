@@ -4,8 +4,6 @@ class PaymentsController < ActionController::Base
 
   def error
     raise "error"
-  ensure
-    puts "Ensure"
   end
 
   def view_error;end

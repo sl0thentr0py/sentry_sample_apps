@@ -5,7 +5,5 @@ Sentry.init do |config|
   config.logger.level = ::Logger::DEBUG
   config.include_local_variables = true
   config.release = "test-neel-#{Time.now.utc}"
-  config.enabled_patches += [:sidekiq_scheduler]
-  config.enabled_environments = %w[production]
   config.debug = true
 end
