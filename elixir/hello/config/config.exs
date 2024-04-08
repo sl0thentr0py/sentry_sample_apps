@@ -50,16 +50,17 @@ config :phoenix, :json_library, Jason
 config :sentry,
   environment_name: Mix.env(),
   enable_source_code_context: true,
-  root_source_code_paths: [File.cwd!()]
+  root_source_code_paths: [File.cwd!()],
+  integrations: [opentelemetry: true]
 
-config :opentelemetry,
-  traces_exporter: :otlp
+# config :opentelemetry,
+#   traces_exporter: :otlp
 
-config :opentelemetry_exporter,
-  otlp_protocol: :http_protobuf,
-  otlp_traces_endpoint: "https://o447951.ingest.sentry.io/api/5572017/spans/",
+# config :opentelemetry_exporter,
+  # otlp_protocol: :http_protobuf,
+  # otlp_traces_endpoint: "https://o447951.ingest.sentry.io/api/5572017/spans/",
   # otlp_traces_endpoint: "http://localhost:3000/api/5572017/spans/",
-  otlp_headers: [{"x-sentry-auth", "Sentry sentry_version=7,sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"}]
+  # otlp_headers: [{"x-sentry-auth", "Sentry sentry_version=7,sentry_key=5f9675ab3c0a46e79b0b5e019acc7e83"}]
 
 
 # Import environment specific config. This must remain at the bottom
