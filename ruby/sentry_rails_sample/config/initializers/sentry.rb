@@ -5,5 +5,5 @@ Sentry.init do |config|
   config.logger.level = ::Logger::DEBUG
   config.include_local_variables = true
   config.release = "test-neel-#{Time.now.utc}"
-  config.debug = true
+  config.enabled_patches << :graphql
 end

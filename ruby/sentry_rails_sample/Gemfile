@@ -49,6 +49,9 @@ gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
 # gem 'sentry-sidekiq', path: '~/sentry/sdks/sentry-ruby/sentry-sidekiq'
 gem 'sentry-delayed_job', path: '~/sentry/sdks/sentry-ruby/sentry-delayed_job'
 
+# graphql
+gem 'graphql'
+
 gem 'faker'
 
 group :development, :test do
@@ -74,3 +77,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "graphiql-rails", group: :development
