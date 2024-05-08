@@ -1,5 +1,15 @@
-from celery import Celery, signals
+import logging
+import time
 import sentry_sdk
+from secrets import token_hex
+from celery import Celery, signals
+
+
+def init_sentry():
+    sentry_sdk.init(debug=True)
+
+
+# init_sentry()
 
 
 app = Celery(
@@ -8,11 +18,16 @@ app = Celery(
     include=['tasks'],
 )
 
+logger = logging.getLogger(__name__)
+logger.error(f"SETUP {token_hex(2)}")
 
-def init_sentry():
-    sentry_sdk.init(traces_sample_rate=1.0, debug=True)
+
+@app.task
+def my_task():
+    logger.error(f"MY_TASK {token_hex(2)}")
 
 
 @signals.celeryd_init.connect
+# @signals.worker_init.connect
 def init_worker(**_kwargs):
     init_sentry()

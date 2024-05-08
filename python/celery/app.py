@@ -1,3 +1,3 @@
-from tasks import task, try_dividing_by_zero
+from celapp import my_task
 
-try_dividing_by_zero.delay()
+my_task.delay()
