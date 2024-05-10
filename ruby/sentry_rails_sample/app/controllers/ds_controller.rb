@@ -18,14 +18,7 @@ class DsController < ApplicationController
     render(json: { items: items }.merge(external))
   end
 
-  def ds_rails_head
-    span = Sentry.get_current_scope.get_span
-
-    if span
-      @sentry_trace = span.to_sentry_trace
-      @baggage = span.to_baggage
-    end
-  end
+  def ds_rails_head; end
 
   private
 

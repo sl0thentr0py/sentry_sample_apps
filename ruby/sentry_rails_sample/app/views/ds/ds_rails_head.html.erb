@@ -1,33 +1,32 @@
 <% content_for :head do %>
   <script
-      src="https://browser.sentry-cdn.com/7.14.0/bundle.tracing.min.js"
-      integrity="sha384-JN8he2zrOBJXN7OwYop+PvPNavIEBaRIFZHQVup0bOSH5A65MBTbFT+8ysxAa/VK"
+      src="https://browser.sentry-cdn.com/7.114.0/bundle.tracing.debug.min.js"
+      integrity="sha384-zyNQKCh0l6twzRDUZBkbb+L8OPa7OgEBe2dXE3jsa0rSnN4R2WKb2GZsEtHUd+J9"
       crossorigin="anonymous">
   </script>
-  <meta name="sentry-trace" content=<%= @sentry_trace %>>
-  <meta name="baggage" content=<%= @baggage %>>
+
+  <meta name="sentry-trace" content=<%= Sentry.get_traceparent %>>
+  <meta name="baggage" content=<%= Sentry.get_baggage %>>
 <% end %>
 
 <script>
   Sentry.init({
-      dsn: "https://d16ae2d36f9249849c7964e9a3a8a608@o447951.ingest.sentry.io/5429213",
-      integrations: [
-          new Sentry.BrowserTracing({
-              tracingOrigins: ["localhost", /^\//]
-            }),
-        ],
-      release: "foobar",
-      environment: "development",
-      tracesSampleRate: 1.0
-    });
+    dsn: "https://d16ae2d36f9249849c7964e9a3a8a608@o447951.ingest.sentry.io/5429213",
+    integrations: [Sentry.browserTracingIntegration()],
+    tracePropagationTargets: ['localhost', /\//],
+    debug: true,
+    release: "foobar",
+    environment: "development",
+    tracesSampleRate: 1.0
+  });
 
-    var sendReq = () => {
-        fetch("/ds/items")
-          .then(response => response.json())
-          .then(json => console.log(json));
-      };
+  var sendReq = () => {
+    fetch("/ds/items")
+      .then(response => response.json())
+      .then(json => console.log(json));
+  };
 
-    setTimeout(sendReq, 500);
+  setTimeout(sendReq, 500);
 </script>
 
 <h1> Rails head SDK </div>
