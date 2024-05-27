@@ -5,8 +5,7 @@
       crossorigin="anonymous">
   </script>
 
-  <meta name="sentry-trace" content=<%= Sentry.get_traceparent %>>
-  <meta name="baggage" content=<%= Sentry.get_baggage %>>
+  <%= Sentry.get_trace_propagation_meta.html_safe %>
 <% end %>
 
 <script>
