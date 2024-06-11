@@ -1,45 +1,19 @@
-import threading
-import urllib3
-
 import sentry_sdk
-from sentry_sdk.hub import Hub
-from sentry_sdk.scope import add_global_event_processor
+from opentelemetry import trace
+from time import sleep
 
+sentry_sdk.init(
+    debug=True,
+    traces_sample_rate=1.0,
+    _experiments={"otel_powered_performance": True},
+)
 
-sentry_sdk.init(debug=True)
+tracer = trace.get_tracer(__name__)
 
-
-breadcrumbs = []
-lock = threading.Lock()
-
-
-@add_global_event_processor
-def request_breadcrumb_processor(event, hint):
-    global lock
-    global breadcrumbs
-
-    with lock:
-        event["breadcrumbs"]["values"].extend(breadcrumbs)
-
-    return event
-
-
-def foo():
-    global lock
-    global breadcrumbs
-
-    http = urllib3.PoolManager()
-    http.request("GET", "https://httpbin.org/get")
-
-    with lock:
-        breadcrumbs.extend(Hub.current.scope._breadcrumbs)
-
-
-def bar():
-    sentry_sdk.capture_message("event with request")
-
-
-x = threading.Thread(target=foo)
-x.start()
-x.join()
-bar()
+with tracer.start_as_current_span("root"):
+    with tracer.start_as_current_span("db"):
+        sleep(0.5)
+        with tracer.start_as_current_span("redis"):
+            sleep(0.2)
+    with tracer.start_as_current_span("http"):
+        sleep(1)

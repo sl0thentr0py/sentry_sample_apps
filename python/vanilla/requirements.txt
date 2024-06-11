@@ -1,0 +1,26 @@
+asgiref==3.8.1
+certifi==2023.5.7
+Deprecated==1.2.14
+importlib_metadata==7.1.0
+opentelemetry-api==1.25.0
+opentelemetry-distro==0.46b0
+opentelemetry-instrumentation==0.46b0
+opentelemetry-instrumentation-aiohttp-client==0.46b0
+opentelemetry-instrumentation-asgi==0.46b0
+opentelemetry-instrumentation-dbapi==0.46b0
+opentelemetry-instrumentation-django==0.46b0
+opentelemetry-instrumentation-fastapi==0.46b0
+opentelemetry-instrumentation-flask==0.46b0
+opentelemetry-instrumentation-requests==0.46b0
+opentelemetry-instrumentation-sqlite3==0.46b0
+opentelemetry-instrumentation-urllib==0.46b0
+opentelemetry-instrumentation-wsgi==0.46b0
+opentelemetry-sdk==1.25.0
+opentelemetry-semantic-conventions==0.46b0
+opentelemetry-util-http==0.46b0
+packaging==24.1
+-e git+ssh://git@github.com/getsentry/sentry-python.git@28effd69809ee010b0e8cc64096be57a7942c4d2#egg=sentry_sdk
+typing_extensions==4.12.2
+urllib3==1.26.16
+wrapt==1.16.0
+zipp==3.19.2
