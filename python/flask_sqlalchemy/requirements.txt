@@ -2,18 +2,26 @@ blinker==1.4
 certifi==2021.10.8
 charset-normalizer==3.2.0
 click==8.0.4
+Deprecated==1.2.14
 Flask==2.0.3
 Flask-SQLAlchemy==2.5.1
-greenlet==1.1.2
+greenlet==3.0.3
 idna==3.4
-importlib-metadata==4.11.3
+importlib_metadata==8.0.0
 itsdangerous==2.1.1
 Jinja2==3.0.3
 MarkupSafe==2.1.0
+opentelemetry-api==1.26.0
+opentelemetry-distro==0.47b0
+opentelemetry-instrumentation==0.47b0
+opentelemetry-sdk==1.26.0
+opentelemetry-semantic-conventions==0.47b0
 requests==2.31.0
--e git+ssh://git@github.com/getsentry/sentry-python.git@7a7867b2fe0ad8b3d7aeea778b2992b1c506509d#egg=sentry_sdk
+-e git+ssh://git@github.com/getsentry/sentry-python.git@c764ebed9cd426c60b7fb64af59598d06548afc6#egg=sentry_sdk
+setuptools==72.1.0
 SQLAlchemy==1.4.32
 typing_extensions==4.1.1
 urllib3==2.0.4
 Werkzeug==2.0.3
+wrapt==1.16.0
 zipp==3.7.0

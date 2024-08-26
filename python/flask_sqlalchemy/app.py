@@ -5,9 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 sentry_sdk.init(
+    debug=True,
     traces_sample_rate=1.0,
-    # send_default_pii=True,
-    # debug=True
+    _experiments={"otel_powered_performance": True},
 )
 
 
