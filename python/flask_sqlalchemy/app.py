@@ -1,6 +1,7 @@
 import sentry_sdk
 import requests
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -12,6 +13,8 @@ sentry_sdk.init(
 
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
 
