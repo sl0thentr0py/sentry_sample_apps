@@ -5,31 +5,18 @@ from time import sleep
 sentry_sdk.init(
     debug=True,
     traces_sample_rate=1.0,
-    _experiments={"otel_powered_performance": True},
 )
 
 
-sentry_sdk.set_tag("tag.global", 99)
-
-## sentry apis
-with sentry_sdk.start_span(description="sentry request"):
-    sentry_sdk.set_tag("tag.inner", "asd")
-    sleep(0.1)
-    with sentry_sdk.start_span(description="sentry db"):
-        sleep(0.5)
-        with sentry_sdk.start_span(description="sentry redis"):
-            sleep(0.2)
-    with sentry_sdk.start_span(description="sentry http"):
-        sleep(1)
-
-## otel apis
-# tracer = trace.get_tracer(__name__)
-
-# with tracer.start_as_current_span("request"):
-#     sleep(0.1)
-#     with tracer.start_as_current_span("db"):
-#         sleep(0.5)
-#         with tracer.start_as_current_span("redis"):
-#             sleep(0.2)
-#     with tracer.start_as_current_span("http"):
-#         sleep(1)
+with sentry_sdk.isolation_scope() as isolation_scope:
+    print(sentry_sdk.get_isolation_scope()._tags)
+    sentry_sdk.set_tag("a", 42)
+    print(sentry_sdk.get_isolation_scope()._tags)
+    print(isolation_scope._tags)
+    with sentry_sdk.new_scope() as new_scope:
+        new_scope.set_tag("b", 21)
+        sentry_sdk.set_tag("c", "Asd")
+        print(new_scope._tags)
+        print(sentry_sdk.get_current_scope()._tags)
+        print(sentry_sdk.get_isolation_scope()._tags)
+        print(isolation_scope._tags)
