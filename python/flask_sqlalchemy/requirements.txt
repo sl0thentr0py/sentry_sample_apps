@@ -4,6 +4,7 @@ charset-normalizer==3.2.0
 click==8.0.4
 Deprecated==1.2.14
 Flask==2.0.3
+Flask-Cors==4.0.1
 Flask-SQLAlchemy==2.5.1
 greenlet==3.0.3
 idna==3.4
@@ -17,8 +18,7 @@ opentelemetry-instrumentation==0.47b0
 opentelemetry-sdk==1.26.0
 opentelemetry-semantic-conventions==0.47b0
 requests==2.31.0
--e git+ssh://git@github.com/getsentry/sentry-python.git@c764ebed9cd426c60b7fb64af59598d06548afc6#egg=sentry_sdk
-setuptools==72.1.0
+-e git+ssh://git@github.com/getsentry/sentry-python.git@35e146c63abf7afd6cbb25b4927da552feefcb31#egg=sentry_sdk
 SQLAlchemy==1.4.32
 typing_extensions==4.1.1
 urllib3==2.0.4
