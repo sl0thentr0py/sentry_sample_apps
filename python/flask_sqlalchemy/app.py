@@ -1,3 +1,4 @@
+import opentelemetry
 import sentry_sdk
 import requests
 from flask import Flask, jsonify, request
