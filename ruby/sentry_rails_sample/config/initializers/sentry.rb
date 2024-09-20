@@ -1,9 +1,11 @@
+require 'sentry/vernier/profiler'
 
 Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger, :http_logger, :redis_logger]
-  # config.traces_sample_rate = 1.0
+  config.traces_sample_rate = 1.0
+  config.profiles_sample_rate = 1.0
+  config.profiler_class = Sentry::Vernier::Profiler
   config.send_default_pii = true
-  config.strip_backtrace_load_path = false
   config.logger.level = ::Logger::DEBUG
   config.include_local_variables = true
   config.release = "test-neel-#{Time.now.utc}"

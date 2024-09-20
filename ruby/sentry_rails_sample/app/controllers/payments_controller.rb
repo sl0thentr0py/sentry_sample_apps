@@ -2,13 +2,8 @@ class PaymentsController < ActionController::Base
   before_action :set_sentry_user, except: [:cable, :profile]
   skip_forgery_protection
 
-  def call_error
-    raise "error"
-  end
-
   def error
-    1 + 2
-    call_error
+    raise "error"
   end
 
   def view_error;end
