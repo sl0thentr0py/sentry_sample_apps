@@ -1,21 +1,14 @@
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-delayed_job
+  remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-delayed_job (5.19.0)
-      delayed_job (>= 4.0)
-      sentry-ruby (~> 5.19.0)
-
-PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-rails
-  specs:
-    sentry-rails (5.19.0)
+    sentry-rails (5.20.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.19.0)
+      sentry-ruby (~> 5.20.0)
 
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-ruby
+  remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.19.0)
+    sentry-ruby (5.20.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
 
@@ -284,7 +277,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    vernier (1.2.1)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -333,14 +325,12 @@ DEPENDENCIES
   redis (~> 5.0)
   sass-rails (>= 6)
   selenium-webdriver
-  sentry-delayed_job!
   sentry-rails!
   sentry-ruby!
   spring
   stackprof
   turbolinks (~> 5)
   tzinfo-data
-  vernier (~> 1.0)
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)

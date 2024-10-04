@@ -5,6 +5,6 @@
 
 <main>
   <div class="card">
-    <Rails />
+    <Flask />
   </div>
 </main>

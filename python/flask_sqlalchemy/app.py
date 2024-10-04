@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 sentry_sdk.init(
     debug=True,
-    traces_sample_rate=1.0,
+    traces_sample_rate=0.9,
     _experiments={"otel_powered_performance": True},
 )
 
@@ -35,6 +35,7 @@ def insert():
 @app.route("/count")
 def count():
     count = User.query.count()
+    requests.get("http://localhost:3000/success")
     return f"<p>count: {count} </p>"
 
 
