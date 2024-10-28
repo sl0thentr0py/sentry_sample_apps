@@ -1,14 +1,14 @@
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-rails
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (5.20.0)
+    sentry-rails (5.21.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.20.0)
+      sentry-ruby (~> 5.21.0)
 
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-ruby
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.20.0)
+    sentry-ruby (5.21.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
 
