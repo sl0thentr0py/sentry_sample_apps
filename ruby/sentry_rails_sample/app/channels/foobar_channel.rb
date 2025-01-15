@@ -1,6 +1,6 @@
 class FoobarChannel < ApplicationCable::Channel
   def subscribed
-    raise "Neel actioncable test"
+    # raise "Neel actioncable test"
     stream_from "foobar_channel"
   end
 
