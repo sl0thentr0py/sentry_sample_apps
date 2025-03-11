@@ -1,19 +1,19 @@
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-rails
+  remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
     sentry-rails (5.22.4)
       railties (>= 5.0)
       sentry-ruby (~> 5.22.4)
 
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-ruby
+  remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
     sentry-ruby (5.22.4)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
 
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-sidekiq
+  remote: ../../../sdks/sentry-ruby/sentry-sidekiq
   specs:
     sentry-sidekiq (5.22.4)
       sentry-ruby (~> 5.22.4)
@@ -100,7 +100,6 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     base64 (0.2.0)
     bigdecimal (3.1.8)
-    bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
     builder (3.3.0)
@@ -171,6 +170,8 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
+    nokogiri (1.16.7-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.7-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
@@ -281,11 +282,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    web-console (4.2.1)
-      actionview (>= 6.0.0)
-      activemodel (>= 6.0.0)
-      bindex (>= 0.4.0)
-      railties (>= 6.0.0)
     webdrivers (5.3.1)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
@@ -305,6 +301,7 @@ GEM
     zeitwerk (2.6.18)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-darwin-20
   x86_64-darwin-22
   x86_64-linux
@@ -335,7 +332,6 @@ DEPENDENCIES
   spring
   turbolinks (~> 5)
   tzinfo-data
-  web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
 

@@ -3,7 +3,7 @@ class PaymentsController < ActionController::Base
   skip_forgery_protection
 
   def error
-    raise "error"
+    User.broken_method
   end
 
   def view_error;end

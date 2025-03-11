@@ -25,6 +25,6 @@ test:
 
 production:
   <<: *default
-  database: rails_production
+  database: rails
   username: rails
-  password: xoxo
+  password: rails
