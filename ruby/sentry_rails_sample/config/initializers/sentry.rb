@@ -7,5 +7,7 @@ Sentry.init do |config|
   config.release = "test-neel-#{Time.now.utc}"
   config.enabled_patches << :graphql
 
+  config.instrumenter = :otel
+
   config.sidekiq.propagate_traces = false unless Rails.const_defined?('Server')
 end
