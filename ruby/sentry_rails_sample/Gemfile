@@ -33,7 +33,7 @@ gem 'redis', '~> 5.0'
 gem 'httparty'
 
 # job stuff
-gem 'sidekiq'
+gem 'sidekiq', '7.3.9'
 # gem 'sidekiq-cron'
 # gem 'sidekiq-scheduler'
 # gem 'delayed_job_active_record'
