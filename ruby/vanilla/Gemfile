@@ -3,3 +3,4 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'debug'
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
+gem 'concurrent-ruby'
