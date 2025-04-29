@@ -18,7 +18,8 @@ opentelemetry-instrumentation==0.47b0
 opentelemetry-sdk==1.26.0
 opentelemetry-semantic-conventions==0.47b0
 requests==2.31.0
--e git+ssh://git@github.com/getsentry/sentry-python.git@35e146c63abf7afd6cbb25b4927da552feefcb31#egg=sentry_sdk
+-e git+ssh://git@github.com/getsentry/sentry-python.git@35fab6ba91a70041d97936a1b8b2c0b5f7761c32#egg=sentry_sdk
+setuptools==80.0.0
 SQLAlchemy==1.4.32
 typing_extensions==4.1.1
 urllib3==2.0.4

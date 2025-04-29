@@ -1,7 +1,7 @@
-import opentelemetry
 import sentry_sdk
 import requests
-from flask import Flask, jsonify, request
+import time
+from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
@@ -10,7 +10,6 @@ sentry_sdk.init(
     debug=True,
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
-    _experiments={"otel_powered_performance": True},
 )
 
 
@@ -40,7 +39,9 @@ def expensive():
 @app.route("/count")
 def count():
     count = User.query.count()
-    expensive()
+    with sentry_sdk.start_span(name="sleep"):
+        time.sleep(1)
+        _a = 1 / 0
     # requests.get("http://localhost:3000/success")
     return f"<p>count: {count} </p>"
 
