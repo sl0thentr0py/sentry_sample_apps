@@ -1,4 +1,5 @@
 import sentry_sdk
+from sentry_sdk.transport import HttpTransport
 import requests
 import time
 from flask import Flask, jsonify
@@ -6,10 +7,33 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 
+class FileWriteHttpTransport(HttpTransport):
+    def _serialize_envelope(self, envelope):
+        release = self.options["release"]
+        project_root = self.options["project_root"]
+
+        from pathlib import Path
+        path = Path(f"{project_root}/out/{release}")
+        path.parent.mkdir(parents=True, exist_ok=True) 
+        with open(path, "ab") as f:
+            envelope.serialize_into(f)
+
+        return super()._serialize_envelope(envelope)
+
+
+def traces_sampler(sampling_context):
+    if "favicon" in sampling_context["url.path"]:
+        return 0.0
+    else:
+        return 1.0
+
+
 sentry_sdk.init(
+    release=f"flask-sqlalchemy-{sentry_sdk.VERSION}",
+    transport=FileWriteHttpTransport,
     debug=True,
-    traces_sample_rate=1.0,
-    profiles_sample_rate=1.0,
+    traces_sampler=traces_sampler,
+    # profiles_sample_rate=0.1,
 )
 
 
@@ -38,10 +62,14 @@ def expensive():
 
 @app.route("/count")
 def count():
+    sentry_sdk.set_user({"email":"jane.doe@adas.com"})
+    sentry_sdk.set_tag("foo", 42)
+    sentry_sdk.set_tag("bar", "baz")
     count = User.query.count()
-    with sentry_sdk.start_span(name="sleep"):
+
+    with sentry_sdk.start_span(name="sleep") as span:
+        span.set_data("span_foo", 23)
         time.sleep(1)
-        _a = 1 / 0
     # requests.get("http://localhost:3000/success")
     return f"<p>count: {count} </p>"
 
