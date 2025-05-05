@@ -30,9 +30,9 @@ def traces_sampler(sampling_context):
 
 sentry_sdk.init(
     release=f"flask-sqlalchemy-{sentry_sdk.VERSION}",
-    transport=FileWriteHttpTransport,
+    # transport=FileWriteHttpTransport,
     debug=True,
-    traces_sampler=traces_sampler,
+    # traces_sample_rate=1.0,
     # profiles_sample_rate=0.1,
 )
 
@@ -70,7 +70,8 @@ def count():
     with sentry_sdk.start_span(name="sleep") as span:
         span.set_data("span_foo", 23)
         time.sleep(1)
-    # requests.get("http://localhost:3000/success")
+    requests.get("http://localhost:3000/error")
+    1/0
     return f"<p>count: {count} </p>"
 
 
@@ -93,6 +94,7 @@ def twp():
 
 @app.route("/error")
 def error():
+    sentry_sdk.get_isolation_scope().add_attachment(bytes=b"hello attachemnt", filename="test.txt")
     return 420.69 / 0
 
 
