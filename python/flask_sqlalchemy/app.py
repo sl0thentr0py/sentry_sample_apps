@@ -1,29 +1,13 @@
-import pympler
 import sentry_sdk
-import opentelemetry
-from sentry_sdk.transport import HttpTransport
-import requests
 import time
-import linecache
-import tracemalloc
-import gc
+import requests
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-
-class FileWriteHttpTransport(HttpTransport):
-    def _serialize_envelope(self, envelope):
-        release = self.options["release"]
-        project_root = self.options["project_root"]
-
-        from pathlib import Path
-        path = Path(f"{project_root}/out/{release}")
-        path.parent.mkdir(parents=True, exist_ok=True) 
-        with open(path, "ab") as f:
-            envelope.serialize_into(f)
-
-        return super()._serialize_envelope(envelope)
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 
 
 def traces_sampler(sampling_context):
@@ -32,37 +16,11 @@ def traces_sampler(sampling_context):
     else:
         return 1.0
 
-
-def display_top(snapshot, key_type='lineno', limit=5):
-    snapshot = snapshot.filter_traces((
-        tracemalloc.Filter(True, "*sentry_sdk/opentelemetry/span_processor*"),
-        tracemalloc.Filter(True, "*opentelemetry*"),
-    ))
-    top_stats = snapshot.statistics(key_type)
-
-    print("Top %s lines" % limit)
-    for index, stat in enumerate(top_stats[:limit], 1):
-        frame = stat.traceback[0]
-        print("#%s: %s:%s: %.1f KiB"
-              % (index, frame.filename, frame.lineno, stat.size / 1024))
-        line = linecache.getline(frame.filename, frame.lineno).strip()
-        if line:
-            print('    %s' % line)
-
-    other = top_stats[limit:]
-    if other:
-        size = sum(stat.size for stat in other)
-        print("%s other: %.1f KiB" % (len(other), size / 1024))
-    total = sum(stat.size for stat in top_stats)
-    print("Total allocated size: %.1f KiB" % (total / 1024))
-
-
 sentry_sdk.init(
     release=f"flask-sqlalchemy-{sentry_sdk.VERSION}",
-    # transport=FileWriteHttpTransport,
     debug=True,
     traces_sample_rate=1.0,
-    # profiles_sample_rate=0.1,
+    default_integrations=False,
 )
 
 
@@ -71,24 +29,11 @@ CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
-# tracemalloc.start()
 
 
-def track_memory(func):
-    def wrapper(*args, **kwargs):
-        snapshot1 = tracemalloc.take_snapshot()
-        display_top(snapshot1)
-
-        result = func(*args, **kwargs)
-
-        gc.collect()
-
-        snapshot2 = tracemalloc.take_snapshot()
-        display_top(snapshot2)
-        # top_stats = snapshot2.compare_to(snapshot1, "lineno") 
-
-        return result
-    return wrapper
+FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+SQLAlchemyInstrumentor().instrument(engine=db.engine)
 
 
 class User(db.Model):
@@ -108,7 +53,6 @@ def expensive():
         math.sqrt(64*64*64*64*64)
 
 @app.route("/count")
-# @track_memory
 def count():
     sentry_sdk.set_user({"email":"jane.doe@adas.com"})
     sentry_sdk.set_tag("foo", 42)
@@ -118,6 +62,7 @@ def count():
     with sentry_sdk.start_span(name="sleep") as span:
         span.set_data("span_foo", 23)
         time.sleep(0.1)
+        requests.get("http://localhost:3000/success")
 
     return f"<p>count: {count} </p>"
 
