@@ -1,26 +1,15 @@
 import sentry_sdk
-import time
 import requests
-from flask import Flask, jsonify
+import time
+from flask import Flask, jsonify, stream_with_context, Response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
-
-
-def traces_sampler(sampling_context):
-    if "favicon" in sampling_context["url.path"]:
-        return 0.0
-    else:
-        return 1.0
 
 sentry_sdk.init(
-    release=f"flask-sqlalchemy-{sentry_sdk.VERSION}",
     debug=True,
     traces_sample_rate=1.0,
-    default_integrations=False,
+    profiles_sample_rate=1.0,
 )
 
 
@@ -29,11 +18,6 @@ CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
-
-
-FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()
-SQLAlchemyInstrumentor().instrument(engine=db.engine)
 
 
 class User(db.Model):
@@ -47,23 +31,32 @@ def insert():
     db.session.commit()
     return "<p>inserted!</p>"
 
+
 def expensive():
     import math
     for _ in range(100000000):
         math.sqrt(64*64*64*64*64)
 
+
+@app.route("/scoped-response")
+def myroute():
+    @stream_with_context
+    def generate():
+        yield b"hello"
+        sentry_sdk.set_tag("foo", "bar")
+        yield b"world"
+        1/0
+
+    return Response(generate())
+
+
 @app.route("/count")
 def count():
-    sentry_sdk.set_user({"email":"jane.doe@adas.com"})
-    sentry_sdk.set_tag("foo", 42)
-    sentry_sdk.set_tag("bar", "baz")
     count = User.query.count()
-
-    with sentry_sdk.start_span(name="sleep") as span:
-        span.set_data("span_foo", 23)
-        time.sleep(0.1)
-        requests.get("http://localhost:3000/success")
-
+    with sentry_sdk.start_span(name="sleep"):
+        time.sleep(1)
+        _a = 1 / 0
+    # requests.get("http://localhost:3000/success")
     return f"<p>count: {count} </p>"
 
 
@@ -86,7 +79,6 @@ def twp():
 
 @app.route("/error")
 def error():
-    sentry_sdk.get_isolation_scope().add_attachment(bytes=b"hello attachemnt", filename="test.txt")
     return 420.69 / 0
 
 
