@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 import os
 from datetime import timedelta
 from celery import Celery
-from celery.decorators import periodic_task
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sentry.settings')
@@ -24,7 +23,10 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-# @periodic_task(run_every=timedelta(seconds=5))
+# Updated periodic task implementation for Celery 5.x
+# Note: To use periodic tasks, you need to set up celery beat scheduling
+# in your deployment configuration
+@app.task
 def secondly():
     print("wassup")
     debug_task.apply_async()

@@ -52,6 +52,7 @@ def myroute():
 
 @app.route("/count")
 def count():
+    sentry_sdk.set_transaction_name("custom_scope_api")
     count = User.query.count()
     with sentry_sdk.start_span(name="sleep"):
         time.sleep(1)
