@@ -56,7 +56,6 @@ def count():
     count = User.query.count()
     with sentry_sdk.start_span(name="sleep"):
         time.sleep(1)
-        _a = 1 / 0
     # requests.get("http://localhost:3000/success")
     return f"<p>count: {count} </p>"
 
