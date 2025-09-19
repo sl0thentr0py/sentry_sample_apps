@@ -5,6 +5,7 @@ from string import ascii_lowercase
 
 from django.http import HttpResponse
 from sentry_sdk import configure_scope, add_breadcrumb, start_span
+from asgiref.sync import sync_to_async
 
 from .tasks import rq_task as rqt, celery_task as ct, tell_the_world
 
@@ -64,3 +65,23 @@ def celery_task(request):
     tell_the_world.delay(string_val)
 
     return HttpResponse("Celery Task run successful")
+
+
+def sync_function():
+    """A simple synchronous function to convert to async"""
+    with start_span(op="sync_function") as span:
+        span.set_data("function_type", "sync")
+        time.sleep(0.1)  # Simulate some work
+        return "Sync function completed"
+
+
+async def sync_to_async_test(request):
+    """Test view for asgiref.sync.sync_to_async functionality"""
+    result = await sync_to_async(sync_function, thread_sensitive=True)()
+    return HttpResponse(f"sync_to_async test completed: {result}")
+
+
+async def sync_to_async_test_not_sensitive(request):
+    """Test view for asgiref.sync.sync_to_async functionality"""
+    result = await sync_to_async(sync_function, thread_sensitive=False)()
+    return HttpResponse(f"sync_to_async test completed: {result}")

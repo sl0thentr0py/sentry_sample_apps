@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from errors.views import bork, transaction, rq_task, celery_task, scope1, scope2
+from errors.views import bork, transaction, rq_task, celery_task, scope1, scope2, sync_to_async_test, sync_to_async_test_not_sensitive
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +25,6 @@ urlpatterns = [
     path('transaction/<int:num>', transaction),
     path('rq_task/', rq_task),
     path('celery_task/', celery_task),
+    path('sync_to_async/', sync_to_async_test),
+    path('sync_to_async_not/', sync_to_async_test_not_sensitive),
 ]

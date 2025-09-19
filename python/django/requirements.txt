@@ -9,16 +9,18 @@ click-plugins==1.1.1.2
 click-repl==0.3.0
 Django==5.1.6
 django-rq==2.10.2
+h11==0.16.0
 kombu==5.5.4
 packaging==25.0
 prompt_toolkit==3.0.51
 python-dateutil==2.9.0.post0
 redis==5.2.1
 rq==2.0.0
--e git+ssh://git@github.com/getsentry/sentry-python.git@1b4f8d3b1ab070b7b279d72c70e8f28488efe89c#egg=sentry_sdk
+-e git+ssh://git@github.com/getsentry/sentry-python.git@97a5c0896d9673c75d76ab5ee3c2c1608dde91f4#egg=sentry_sdk
 six==1.17.0
 sqlparse==0.5.3
 tzdata==2025.2
 urllib3==2.5.0
+uvicorn==0.35.0
 vine==5.1.0
 wcwidth==0.2.13
