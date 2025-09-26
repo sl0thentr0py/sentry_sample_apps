@@ -1,20 +1,24 @@
 import logging
-import multiprocessing
-import concurrent.futures
-import sentry_sdk.integrations.logging
+import weakref
+import time
+import sentry_sdk
 
-logging.captureWarnings(True)
-logging.basicConfig(level=logging.DEBUG)
+sentry_sdk.init()
 
-sentry_sdk.init(
-    traces_sample_rate=1.0,
-    integrations=[
-        sentry_sdk.integrations.logging.LoggingIntegration(event_level=logging.WARNING),
-    ]
-)
-sentry_sdk.capture_message("hello")
+weak_exception = None
+class CustomException(Exception):
+    pass
 
-if __name__ == "__main__":
-    multiprocessing.set_start_method("spawn")
-    pool = concurrent.futures.ProcessPoolExecutor()
-    pool.submit(sentry_sdk.capture_message, "world")
+def callback(ref):
+    print("Exception was garbage collected!")
+
+try:
+    raise CustomException('Custom Exception')
+except Exception as e:
+    logging.exception("Exception logging")
+    weak_exception = weakref.ref(e, callback)
+    sentry_sdk.flush()
+
+while True:
+    time.sleep(1)
+    print(weak_exception())
