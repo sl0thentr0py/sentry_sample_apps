@@ -5,12 +5,53 @@ from flask import Flask, jsonify, stream_with_context, Response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
-sentry_sdk.init(
-    debug=True,
-    traces_sample_rate=1.0,
-    profiles_sample_rate=1.0,
-)
+import sentry_sdk
+from sentry_sdk.scope import add_global_event_processor
+
+
+# Initialize OpenTelemetry
+trace.set_tracer_provider(TracerProvider())
+tracer_provider = trace.get_tracer_provider()
+
+## need OTEL_EXPORTER_OTLP_TRACES_ENDPOINT and OTEL_EXPORTER_OTLP_TRACES_HEADERS in env
+otlp_exporter = OTLPSpanExporter()
+span_processor = BatchSpanProcessor(otlp_exporter)
+trace.get_tracer_provider().add_span_processor(span_processor)
+tracer = trace.get_tracer(__name__)
+
+sentry_sdk.init(debug=True)
+
+
+@add_global_event_processor
+def link_trace_context_to_error_event(event, hint):
+    if hasattr(event, "type") and event["type"] == "transaction":
+        return event
+
+    otel_span = trace.get_current_span()
+    if not otel_span:
+        return event
+
+    ctx = otel_span.get_span_context()
+
+    if ctx.trace_id == trace.INVALID_TRACE_ID or ctx.span_id == trace.INVALID_SPAN_ID:
+        return event
+
+    contexts = event.setdefault("contexts", {})
+    contexts.setdefault("trace", {}).update({
+        "trace_id": trace.format_trace_id(ctx.trace_id),
+        "span_id": trace.format_span_id(ctx.span_id),
+    })
+    print("added stuff")
+
+    return event
 
 
 app = Flask(__name__)
@@ -18,6 +59,11 @@ CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
+
+# Instrument Flask, Requests, and SQLAlchemy
+FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+SQLAlchemyInstrumentor().instrument(engine=db.engine)
 
 
 class User(db.Model):
@@ -54,9 +100,14 @@ def myroute():
 def count():
     sentry_sdk.set_transaction_name("custom_scope_api")
     count = User.query.count()
-    with sentry_sdk.start_span(name="sleep"):
+    with tracer.start_as_current_span(name="sleep"):
         time.sleep(1)
-    # requests.get("http://localhost:3000/success")
+    requests.get("https://example.com")
+    with tracer.start_as_current_span(name="exception here"):
+        try:
+            1 / 0
+        except:
+            sentry_sdk.capture_exception()
     return f"<p>count: {count} </p>"
 
 
