@@ -1,20 +1,24 @@
-from time import sleep
+import logging
+import weakref
+import time
 import sentry_sdk
-from opentelemetry.trace import use_span, INVALID_SPAN
 
-sentry_sdk.init(
-    debug=True,
-    traces_sample_rate=1.0,
-)
+sentry_sdk.init()
 
-with sentry_sdk.start_span(name="parent"):
-    with sentry_sdk.start_span(name="child"):
-        sleep(0.2)
-    with use_span(INVALID_SPAN):
-        with sentry_sdk.start_span(name="child2"):
-            sleep(1)
-            with sentry_sdk.start_span(name="child3"):
-                sleep(0.5)
+weak_exception = None
+class CustomException(Exception):
+    pass
 
+def callback(ref):
+    print("Exception was garbage collected!")
 
-sentry_sdk.flush()
+try:
+    raise CustomException('Custom Exception')
+except Exception as e:
+    logging.exception("Exception logging")
+    weak_exception = weakref.ref(e, callback)
+    sentry_sdk.flush()
+
+while True:
+    time.sleep(1)
+    print(weak_exception())
