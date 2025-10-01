@@ -14,7 +14,7 @@ from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
 import sentry_sdk
-from sentry_sdk.scope import add_global_event_processor
+from sentry_sdk.integrations.otlp import OtlpIntegration
 
 
 # Initialize OpenTelemetry
@@ -27,31 +27,11 @@ span_processor = BatchSpanProcessor(otlp_exporter)
 trace.get_tracer_provider().add_span_processor(span_processor)
 tracer = trace.get_tracer(__name__)
 
-sentry_sdk.init(debug=True)
 
-
-@add_global_event_processor
-def link_trace_context_to_error_event(event, hint):
-    if hasattr(event, "type") and event["type"] == "transaction":
-        return event
-
-    otel_span = trace.get_current_span()
-    if not otel_span:
-        return event
-
-    ctx = otel_span.get_span_context()
-
-    if ctx.trace_id == trace.INVALID_TRACE_ID or ctx.span_id == trace.INVALID_SPAN_ID:
-        return event
-
-    contexts = event.setdefault("contexts", {})
-    contexts.setdefault("trace", {}).update({
-        "trace_id": trace.format_trace_id(ctx.trace_id),
-        "span_id": trace.format_span_id(ctx.span_id),
-    })
-    print("added stuff")
-
-    return event
+sentry_sdk.init(
+    debug=True,
+    integrations=[OtlpIntegration()],
+)
 
 
 app = Flask(__name__)
