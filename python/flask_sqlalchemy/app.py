@@ -8,31 +8,21 @@ from flask_sqlalchemy import SQLAlchemy
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
-from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
 import sentry_sdk
 from sentry_sdk.integrations.otlp import OtlpIntegration
 
-
-# Initialize OpenTelemetry
-trace.set_tracer_provider(TracerProvider())
-tracer_provider = trace.get_tracer_provider()
-
 ## need OTEL_EXPORTER_OTLP_TRACES_ENDPOINT and OTEL_EXPORTER_OTLP_TRACES_HEADERS in env
 otlp_exporter = OTLPSpanExporter()
 span_processor = BatchSpanProcessor(otlp_exporter)
+trace.set_tracer_provider(TracerProvider())
 trace.get_tracer_provider().add_span_processor(span_processor)
-tracer = trace.get_tracer(__name__)
-
 
 sentry_sdk.init(
     debug=True,
     integrations=[OtlpIntegration()],
 )
-
 
 app = Flask(__name__)
 CORS(app)
@@ -40,11 +30,16 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
 
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+
 # Instrument Flask, Requests, and SQLAlchemy
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 SQLAlchemyInstrumentor().instrument(engine=db.engine)
 
+tracer = trace.get_tracer(__name__)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
