@@ -11,17 +11,19 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
 import sentry_sdk
-from sentry_sdk.integrations.otlp import OtlpIntegration
+from sentry_sdk.integrations.otlp import OTLPIntegration
+from sentry_sdk import logger as sentry_logger
 
 ## need OTEL_EXPORTER_OTLP_TRACES_ENDPOINT and OTEL_EXPORTER_OTLP_TRACES_HEADERS in env
-otlp_exporter = OTLPSpanExporter()
-span_processor = BatchSpanProcessor(otlp_exporter)
-trace.set_tracer_provider(TracerProvider())
-trace.get_tracer_provider().add_span_processor(span_processor)
+# otlp_exporter = OTLPSpanExporter()
+# span_processor = BatchSpanProcessor(otlp_exporter)
+# trace.set_tracer_provider(TracerProvider())
+# trace.get_tracer_provider().add_span_processor(span_processor)
 
 sentry_sdk.init(
     debug=True,
-    integrations=[OtlpIntegration()],
+    enable_logs=True,
+    integrations=[OTLPIntegration()],
 )
 
 app = Flask(__name__)
@@ -78,8 +80,10 @@ def count():
     with tracer.start_as_current_span(name="sleep"):
         time.sleep(1)
     requests.get("https://example.com")
+
     with tracer.start_as_current_span(name="exception here"):
         try:
+            sentry_logger.debug('Cache miss for user {user_id}', user_id=123)
             1 / 0
         except:
             sentry_sdk.capture_exception()

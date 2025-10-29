@@ -31,7 +31,6 @@ packaging==25.0
 protobuf==6.32.1
 psutil==7.0.0
 requests==2.31.0
--e git+ssh://git@github.com/getsentry/sentry-python.git@9b58d3155db85947cb951649f8651d3afdf559f9#egg=sentry_sdk
 setuptools==80.0.0
 SQLAlchemy==1.4.32
 typing_extensions==4.15.0
