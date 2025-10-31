@@ -1,24 +1,14 @@
-import sentry_sdk
-import requests
 import time
-from flask import Flask, jsonify, stream_with_context, Response
-from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-
+import requests
 import sentry_sdk
 from sentry_sdk.integrations.otlp import OTLPIntegration
 from sentry_sdk import logger as sentry_logger
+from flask import Flask, jsonify, stream_with_context, Response
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from opentelemetry import trace
 
-## need OTEL_EXPORTER_OTLP_TRACES_ENDPOINT and OTEL_EXPORTER_OTLP_TRACES_HEADERS in env
-# otlp_exporter = OTLPSpanExporter()
-# span_processor = BatchSpanProcessor(otlp_exporter)
-# trace.set_tracer_provider(TracerProvider())
-# trace.get_tracer_provider().add_span_processor(span_processor)
 
 sentry_sdk.init(
     debug=True,
