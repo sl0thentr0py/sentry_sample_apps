@@ -1,22 +1,22 @@
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (5.28.1)
+    sentry-rails (6.2.0)
       railties (>= 5.2.0)
-      sentry-ruby (~> 5.28.1)
+      sentry-ruby (~> 6.2.0)
 
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (5.28.1)
+    sentry-ruby (6.2.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
 
 PATH
   remote: ../../../sdks/sentry-ruby/sentry-sidekiq
   specs:
-    sentry-sidekiq (5.28.1)
-      sentry-ruby (~> 5.28.1)
+    sentry-sidekiq (6.2.0)
+      sentry-ruby (~> 6.2.0)
       sidekiq (>= 5.0)
 
 GEM
