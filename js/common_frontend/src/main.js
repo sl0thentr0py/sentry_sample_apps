@@ -12,6 +12,7 @@ Sentry.init({
     replaysSessionSampleRate: 1.0,
     replaysOnErrorSampleRate: 1.0,
     tracePropagationTargets: ["localhost"],
+    sendDefaultPii: true,
 });
 
 const app = new App({
