@@ -1,18 +1,20 @@
-import time
-
-import requests
 import sentry_sdk
-from sentry_sdk import logger as sentry_logger
+import requests
+import time
 from flask import Flask, jsonify, stream_with_context, Response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+from opentelemetry import trace
+
+import sentry_sdk
+from sentry_sdk.integrations.otlp import OTLPIntegration
+from sentry_sdk import logger as sentry_logger
 
 sentry_sdk.init(
     debug=True,
     enable_logs=True,
-    traces_sample_rate=1.0,
-    strict_trace_continuation=True,
+    integrations=[OTLPIntegration()],
 )
 
 app = Flask(__name__)
@@ -21,6 +23,16 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
 db = SQLAlchemy(app)
 
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+
+# Instrument Flask, Requests, and SQLAlchemy
+FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+SQLAlchemyInstrumentor().instrument(engine=db.engine)
+
+tracer = trace.get_tracer(__name__)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -56,11 +68,11 @@ def myroute():
 def count():
     sentry_sdk.set_transaction_name("custom_scope_api")
     count = User.query.count()
-    with sentry_sdk.start_span(op="sleep"):
+    with tracer.start_as_current_span(name="sleep"):
         time.sleep(1)
     requests.get("https://example.com")
 
-    with sentry_sdk.start_span(op="exception here"):
+    with tracer.start_as_current_span(name="exception here"):
         try:
             sentry_logger.debug('Cache miss for user {user_id}', user_id=123)
             1 / 0
@@ -74,7 +86,7 @@ def get_tasks():
     return jsonify({'extenal': 42})
 
 
-@app.route("/scrubber", methods=['POST', 'OPTIONS'])
+@app.route("/scrubber", methods=['POST'])
 def test():
     raise Exception("bla")
     return "<p>Hello, World!</p>"
