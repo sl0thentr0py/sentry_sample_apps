@@ -14,7 +14,7 @@ from sentry_sdk import logger as sentry_logger
 sentry_sdk.init(
     debug=True,
     enable_logs=True,
-    integrations=[OTLPIntegration()],
+    integrations=[OTLPIntegration(capture_exceptions=True)],
 )
 
 app = Flask(__name__)
@@ -64,7 +64,7 @@ def myroute():
     return Response(generate())
 
 
-@app.route("/count", methods=['GET', 'OPTIONS'])
+@app.route("/count")
 def count():
     sentry_sdk.set_transaction_name("custom_scope_api")
     count = User.query.count()
@@ -73,11 +73,11 @@ def count():
     requests.get("https://example.com")
 
     with tracer.start_as_current_span(name="exception here"):
-        try:
-            sentry_logger.debug('Cache miss for user {user_id}', user_id=123)
-            1 / 0
-        except:
-            sentry_sdk.capture_exception()
+        # try:
+        sentry_logger.debug('Cache miss for user {user_id}', user_id=123)
+        1 / 0
+        # except:
+        #     sentry_sdk.capture_exception()
     return f"<p>count: {count} </p>"
 
 
