@@ -3,20 +3,25 @@ require 'debug'
 
 Sentry.init do |config|
   config.sdk_logger.level = :debug
+  config.traces_sample_rate = 1.0
+  config.enable_metrics = true
+  config.send_default_pii = true
 end
 
-def recurse(n=0)
-  recurse(n+1)
+transaction = Sentry.start_transaction(name: 'test metrics')
+Sentry.get_current_scope.set_span(transaction) if transaction
+Sentry.get_current_scope.set_user({ id: '1234', username: 'jane', email: 'jane.doe@sentry.io' })
+
+Sentry.with_child_span(op: 'one', description: 'stuff') do
+  Sentry.metrics.count('counter')
+  sleep 0.2
+
+  Sentry.with_child_span(op: 'many', description: 'more stuff') do
+    sleep 6
+    Sentry.metrics.count('counter', value: 20)
+  end
 end
 
-def caller
-  recurse
-end
+transaction.finish
 
-begin
-  caller
-rescue Exception => e
-  Sentry.capture_exception(e)
-end
-
-sleep(2)
+sleep 3

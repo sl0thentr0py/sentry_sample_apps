@@ -1,14 +1,3 @@
-certifi==2024.7.4
-Deprecated==1.2.14
-importlib_metadata==8.0.0
-opentelemetry-api==1.26.0
-opentelemetry-distro==0.47b0
-opentelemetry-instrumentation==0.47b0
-opentelemetry-sdk==1.26.0
-opentelemetry-semantic-conventions==0.47b0
--e git+ssh://git@github.com/getsentry/sentry-python.git@c764ebed9cd426c60b7fb64af59598d06548afc6#egg=sentry_sdk
-setuptools==72.1.0
-typing_extensions==4.12.2
-urllib3==2.2.2
-wrapt==1.16.0
-zipp==3.20.0
+certifi==2026.1.4
+sentry-sdk==2.35.0
+urllib3==2.6.2
