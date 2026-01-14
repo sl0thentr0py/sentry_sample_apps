@@ -1,5 +1,5 @@
 class PaymentsController < ActionController::Base
-  before_action :set_sentry_user, except: [:cable, :profile]
+  before_action :set_sentry_user, except: [:profile]
   skip_forgery_protection
 
   def error
@@ -50,6 +50,10 @@ class PaymentsController < ActionController::Base
     Redis.new.set("mykey", "hello world")
 
     payment.amount = payment.items.map { |i| i.quantity * i.price }.sum
+    attributes = { discount_factor: discount_factor, params: params[:payment] }
+    Sentry::Metrics.count("total_amount", value: payment.amount, attributes: attributes.dup)
+    Sentry::Metrics.gauge("gauge_amount", payment.amount, attributes: attributes.dup)
+    Sentry::Metrics.distribution("distribution", payment.amount, attributes: attributes.dup)
     payment.save
 
     discounted_amount = payment.amount / discount_factor
