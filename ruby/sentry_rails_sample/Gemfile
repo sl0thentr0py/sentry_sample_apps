@@ -51,12 +51,13 @@ gem 'vernier', '~> 1.0'
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'
 gem 'sentry-sidekiq', path: '~/sentry/sdks/sentry-ruby/sentry-sidekiq'
-# gem 'sentry-opentelemetry', path: '~/sentry/sdks/sentry-ruby/sentry-opentelemetry'
+gem 'sentry-opentelemetry', path: '~/sentry/sdks/sentry-ruby/sentry-opentelemetry'
 # gem 'sentry-delayed_job', path: '~/sentry/sdks/sentry-ruby/sentry-delayed_job'
 
 # otel
-# gem 'opentelemetry-sdk'
-# gem 'opentelemetry-instrumentation-all'
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-otlp'
+gem 'opentelemetry-instrumentation-all'
 
 # graphql
 gem 'graphql'

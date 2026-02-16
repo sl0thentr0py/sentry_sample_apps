@@ -1,6 +1,6 @@
 Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger, :http_logger, :redis_logger]
-  config.traces_sample_rate = 1.0
+  # config.traces_sample_rate = 1.0
   config.trace_ignore_status_codes = []
   config.enable_logs = true
   config.send_default_pii = true
@@ -8,4 +8,6 @@ Sentry.init do |config|
   config.include_local_variables = true
   config.release = "test-neel-#{Time.now.utc}"
   config.enabled_patches << :graphql
+
+  config.otlp.enabled = true
 end
