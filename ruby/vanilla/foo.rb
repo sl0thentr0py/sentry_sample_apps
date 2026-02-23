@@ -18,7 +18,7 @@ Sentry.with_child_span(op: 'one', description: 'stuff') do
 
   Sentry.with_child_span(op: 'many', description: 'more stuff') do
     sleep 6
-    Sentry.metrics.count('counter', value: 20)
+    Sentry.metrics.distribution('dist2', 20)
   end
 end
 
