@@ -1,30 +1,30 @@
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-opentelemetry
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-opentelemetry
   specs:
-    sentry-opentelemetry (6.3.0)
+    sentry-opentelemetry (6.4.1)
       opentelemetry-sdk (~> 1.0)
-      sentry-ruby (~> 6.3.0)
+      sentry-ruby (~> 6.4.1)
 
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-rails
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-rails
   specs:
-    sentry-rails (6.3.0)
+    sentry-rails (6.4.1)
       railties (>= 5.2.0)
-      sentry-ruby (~> 6.3.0)
+      sentry-ruby (~> 6.4.1)
 
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-ruby
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-ruby
   specs:
-    sentry-ruby (6.3.0)
+    sentry-ruby (6.4.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
 
 PATH
-  remote: ../../../sdks/sentry-ruby/sentry-sidekiq
+  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-sidekiq
   specs:
-    sentry-sidekiq (6.3.0)
-      sentry-ruby (~> 6.3.0)
+    sentry-sidekiq (6.4.1)
+      sentry-ruby (~> 6.4.1)
       sidekiq (>= 5.0)
 
 GEM

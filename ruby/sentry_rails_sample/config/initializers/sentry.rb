@@ -10,4 +10,6 @@ Sentry.init do |config|
   config.enabled_patches << :graphql
 
   config.otlp.enabled = true
+  # config.otlp.setup_otlp_traces_exporter = false
+  config.otlp.collector_url = "http://localhost:4318/v1/traces"
 end

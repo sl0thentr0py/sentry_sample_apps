@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  debug:
+    verbosity: detailed
+  otlphttp:
+    logs_endpoint: https://o447951.ingest.us.sentry.io/api/5434472/integration/otlp/v1/logs
+    traces_endpoint: https://o447951.ingest.us.sentry.io/api/5434472/integration/otlp/v1/traces
+    headers:
+      x-sentry-auth: "sentry sentry_key=2fb45f003d054a7ea47feb45898f7649"
+    compression: gzip
+    encoding: proto
+    timeout: 30s
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlphttp]
+    metrics:
+      receivers: [otlp]
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      exporters: [otlphttp]
