@@ -2,29 +2,58 @@
   <p> Payment Successful! </p>
 <% else %>
   <%= form_with url: '/checkout', id: 'checkout-form', local: false do |form| %>
-    <%= form.submit "OK" %>
+    <%= form.submit "OK", id: 'checkout-submit' %>
   <% end %>
+  <ul id="checkout-responses"></ul>
 <% end %>
 
 <script>
   var form = document.getElementById('checkout-form');
+  var submit = document.getElementById('checkout-submit');
+  var responses = document.getElementById('checkout-responses');
+
+  if (form) {
     form.addEventListener("submit", function(e) {
-        console.log(e);
-        e.preventDefault();
+      e.preventDefault();
+      submit.disabled = true;
+      submit.value = "Processing...";
 
-        var data = {
-            discount: 0,
-            payment: {'currency': 'USD', 'address': 'Times Square'},
-            items: [
-                {'name': 'Wrench', 'price': 50, quantity: 10},
-                {'name': 'Hammer', 'price': 100, quantity: 2},
-                {'name': 'Screwdriver', 'price': 20, quantity: 5}
-              ]
-        };
+      var data = {
+        discount: 0,
+        payment: {'currency': 'USD', 'address': 'Times Square'},
+        items: [
+          {'name': 'Wrench', 'price': 50, quantity: 10},
+          {'name': 'Hammer', 'price': 100, quantity: 2},
+          {'name': 'Screwdriver', 'price': 20, quantity: 5}
+        ]
+      };
 
-        fetch('/checkout', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
+      fetch('/checkout', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {'Content-Type': 'application/json'}
+      })
+        .then(function(response) {
+          return response.text().then(function(body) {
+            if (!response.ok) throw new Error(body || 'Checkout failed');
+
+            var item = document.createElement('li');
+            item.textContent = 'WOLOLO!';
+            responses.appendChild(item);
           });
-      });
+        })
+        .catch(function(error) {
+          var item = document.createElement('li');
+          item.textContent = 'RAGRETS...';
+          responses.appendChild(item);
+        })
+        .finally(function() {
+          submit.disabled = false;
+        });
+    });
+
+    setInterval(function() {
+      submit.click();
+    }, 5000);
+  }
 </script>
