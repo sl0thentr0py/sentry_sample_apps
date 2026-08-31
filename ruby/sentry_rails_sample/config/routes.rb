@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'view_error', to: 'payments#view_error'
   get 'success', to: 'payments#success'
   get 'measurement', to: 'payments#measurement'
+  match 'data_collection', to: 'payments#data_collection', via: [:get, :post]
   get 'cable_test', to: 'payments#cable_test'
   get 'ds/items', to: 'ds#items'
   get 'ds_rails_head', to: 'ds#ds_rails_head'

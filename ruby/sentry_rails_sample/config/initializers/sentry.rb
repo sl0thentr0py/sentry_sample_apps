@@ -1,14 +1,21 @@
 Sentry.init do |config|
   config.breadcrumbs_logger = [:active_support_logger, :http_logger, :redis_logger]
   config.traces_sample_rate = 1.0
-  config.trace_ignore_status_codes = []
-  config.enable_logs = true
-  config.wololo = true
-  config.wololo_openrouter_api_key = ENV.fetch("OPENROUTER_API_KEY_WORK")
-  config.send_default_pii = true
-  config.sdk_logger = ::Sentry::Logger.new(Rails.root.join("log/sentry.log"))
-  config.sdk_logger.level = ::Logger::DEBUG
-  config.include_local_variables = true
+
+  config.data_collection.user_info = true
+  config.data_collection.cookies.mode = :deny_list
+  config.data_collection.cookies.terms = ["session", "token"]
+  config.data_collection.http_headers.request.mode = :allow_list
+  config.data_collection.http_headers.request.terms = ["X-Public-Data"]
+  config.data_collection.http_bodies = [:incoming_request]
+  config.data_collection.url_query_params.mode = :deny_list
+  config.data_collection.graphql.document = true
+  config.data_collection.graphql.variables = true
+  config.data_collection.database_query_data = true
+  config.data_collection.queues = true
+  config.data_collection.stack_frame_variables = true
+  config.data_collection.frame_context_lines = 5
+
   config.release = "test-neel-#{Time.now.utc}"
   config.enabled_patches << :graphql
 end

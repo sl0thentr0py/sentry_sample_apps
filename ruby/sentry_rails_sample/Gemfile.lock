@@ -1,12 +1,12 @@
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-rails
+  remote: ../../../sdks/sentry-ruby/sentry-rails
   specs:
     sentry-rails (6.7.0)
       railties (>= 5.2.0)
       sentry-ruby (~> 6.7.0)
 
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-ruby
+  remote: ../../../sdks/sentry-ruby/sentry-ruby
   specs:
     sentry-ruby (6.7.0)
       bigdecimal
@@ -14,7 +14,7 @@ PATH
       logger
 
 PATH
-  remote: ../../../../../../../../home/neel/sentry/sdks/sentry-ruby/sentry-sidekiq
+  remote: ../../../sdks/sentry-ruby/sentry-sidekiq
   specs:
     sentry-sidekiq (6.7.0)
       sentry-ruby (~> 6.7.0)
@@ -132,19 +132,8 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
-    event_stream_parser (1.0.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.14.3)
-      faraday-net_http (>= 2.0, < 3.5)
-      json
-      logger
-    faraday-multipart (1.2.0)
-      multipart-post (~> 2.0)
-    faraday-net_http (3.4.4)
-      net-http (~> 0.5)
-    faraday-retry (2.4.0)
-      faraday (~> 2.0)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-aarch64-linux-musl)
     ffi (1.17.4-arm-linux-gnu)
@@ -202,10 +191,7 @@ GEM
     msgpack (1.8.4)
     multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
-    multipart-post (2.4.1)
     mutex_m (0.3.0)
-    net-http (0.9.1)
-      uri (>= 0.11.1)
     net-imap (0.6.6)
       date
       net-protocol
@@ -320,17 +306,6 @@ GEM
     reline (0.6.3)
       io-console (~> 0.5)
     rexml (3.4.4)
-    ruby_llm (1.16.0)
-      base64
-      event_stream_parser (~> 1)
-      faraday (>= 1.10.0)
-      faraday-multipart (>= 1)
-      faraday-net_http (>= 1)
-      faraday-retry (>= 1)
-      marcel (~> 1)
-      ruby_llm-schema (~> 0)
-      zeitwerk (~> 2)
-    ruby_llm-schema (0.4.0)
     rubyzip (3.4.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -372,7 +347,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uri (1.1.1)
     vernier (1.10.1)
     webdrivers (5.3.1)
       nokogiri (~> 1.6)
@@ -420,7 +394,6 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.1.0)
   redis (~> 5.0)
-  ruby_llm
   sass-rails (>= 6)
   selenium-webdriver
   sentry-rails!

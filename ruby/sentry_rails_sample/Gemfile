@@ -47,7 +47,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # sentry
 # gem 'stackprof'
-gem 'ruby_llm'
 gem 'vernier', '~> 1.0'
 gem 'sentry-ruby', path: '~/sentry/sdks/sentry-ruby/sentry-ruby'
 gem 'sentry-rails', path: '~/sentry/sdks/sentry-ruby/sentry-rails'

@@ -1,5 +1,5 @@
 class PaymentsController < ActionController::Base
-  before_action :set_sentry_user, except: [:profile]
+  before_action :set_sentry_user, except: [:profile, :data_collection]
   skip_forgery_protection
 
   def error
@@ -30,6 +30,22 @@ class PaymentsController < ActionController::Base
     transaction = Sentry.get_current_scope.get_transaction
     transaction.set_measurement("metrics.foo", 0.5, "millisecond")
     render(plain: "metrics.foo: 0.5 ms")
+  end
+
+  # Captures a request containing representative values for the data collection
+  # categories and returns the serialized event so the filtering can be tested
+  # without having to inspect the event in Sentry.
+  #
+  # testing command:
+  # curl -X POST 'http://localhost:3000/data_collection?public_data=query-visible&password=query-secret' -H 'X-Public-Data: header-visible' -H 'X-Private-Data: header-private' -H 'Content-Type: application/json' -H 'Cookie: public_data=cookie-visible; session=cookie-secret' --data '{"public_data":"body-visible","password":"body-secret"}'
+  def data_collection
+    HTTParty.post(
+      "https://httpbin.org/post",
+      body: { public_data: "body-visible", password: "body-secret" }.to_json,
+      headers: { "Content-Type" => "application/json" }
+    )
+
+    collect_data_collection
   end
 
   def checkout
@@ -94,6 +110,18 @@ class PaymentsController < ActionController::Base
 
   def slow_ass_function
     garbage_code
+  end
+
+  def collect_data_collection
+    public_query_value = params[:public_data]
+    sensitive_query_value = params[:password]
+    public_header_value = request.headers["X-Public-Data"]
+    sensitive_header_value = request.headers["X-Private-Data"]
+    public_cookie_value = cookies["public_data"]
+    sensitive_cookie_value = cookies["session"]
+    database_query_result = User.where(email: "jane.doe@example.com").pluck(:email)
+
+    raise "data_collection endpoint probe"
   end
 
   def garbage_code
