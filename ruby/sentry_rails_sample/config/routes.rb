@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   get 'sidekiq', to: 'payments#sidekiq'
   get 'active_job', to: 'payments#active_job' # can use with multiple adapters
   get 'delayed_job', to: 'payments#delayed_job'
+  get 'batch_logger', to: 'payments#batch_logger'
+  get 'batch_metrics', to: 'payments#batch_metrics'
   resources :items, only: [:show]
 end

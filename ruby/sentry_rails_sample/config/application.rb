@@ -10,6 +10,7 @@ module SentryRailsSample
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+    config.credentials.content_path = Rails.root.join("tmp/credentials.yml.enc") if Rails.env.local?
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

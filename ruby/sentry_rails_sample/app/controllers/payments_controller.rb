@@ -78,6 +78,23 @@ class PaymentsController < ActionController::Base
     @success = payment.charge
   end
 
+  def batch_logger
+    110.times do |i|
+      Sentry.logger.info("Spam log", num: i)
+    end
+
+    render(plain: "success")
+  end
+
+  def batch_metrics
+    attr = { foo: "bar" }
+    1100.times do |i|
+      Sentry::Metrics.count("span_counter", value: i, attributes: attr)
+    end
+
+    render(plain: "success")
+  end
+
   def cable_test
   end
 
